@@ -6,7 +6,7 @@ const libraries = ["places"];
 
 export default function FromTo({ onSelectFrom, onSelectTo }) {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDODIq-fM4Twx-QIQ2tjNsf6kXYFFZoEm4",
+    googleMapsApiKey: "",
     libraries,
   });
 
