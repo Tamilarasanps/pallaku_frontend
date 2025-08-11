@@ -33,16 +33,16 @@ const Experience = () => {
   ];
 
   return (
-    <div className="mt-16 flex flex-col items-center px-4 py-2">
+    <div className="mt-16 flex flex-col items-center px-4 py-12 ">
       {/* Header */}
-      <h1 className="font-bold lg:text-2xl text-md text-[#E43D12] text-center">
+      <h1 className="font-bold lg:text-2xl text-md text-[#ff1d58] text-center">
         Experience the Difference
       </h1>
-      <p className="text-[#E43D12] mt-4 text-center max-w-xl">
+      <p className="text-[##4a1e2d] mt-4 text-center max-w-xl">
         Redefining travel with unmatched comfort, reliability, and services tailored to your needs.
       </p>
 
-      {/* Icon Cards with animation */}
+      {/* Icon Cards */}
       <div className="w-full mt-12 p-4 flex flex-wrap gap-12 items-center justify-center">
         {arr.map((val, i) => (
           <motion.div
@@ -54,7 +54,7 @@ const Experience = () => {
           >
             <h2 className="font-bold text-lg text-gray-800 mt-4">{val.header}</h2>
             <div className="mt-4 mb-4">{val.icon}</div>
-            <p className="text-sm text-gray-500 mt-2 ">{val.body}</p>
+            <p className="text-sm text-gray-500 mt-2">{val.body}</p>
           </motion.div>
         ))}
       </div>

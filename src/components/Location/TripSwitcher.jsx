@@ -22,8 +22,8 @@ const TripSwitcher = () => {
             });
           }}
         >
-          <FaArrowRightLong color="#E43D12" />
-          <p className="text-[#E43D12]">One way</p>
+          <FaArrowRightLong color="#ff1d58" />
+          <p className="text-[#ff1d58]">One way</p>
         </div>
         {tripType === "onewaytrip" && <Line />}
       </div>
@@ -36,8 +36,8 @@ const TripSwitcher = () => {
             setTripType("roundtrip");
           }}
         >
-          <FaArrowRightArrowLeft color="#E43D12" />
-          <p className="text-[#E43D12]">Round Trip</p>
+          <FaArrowRightArrowLeft color="#ff1d58" />
+          <p className="text-[#ff1d58]">Round Trip</p>
         </div>
         {tripType === "roundtrip" && <Line />}
       </div>
@@ -49,7 +49,7 @@ const Line = () => (
   <motion.div
     layoutId="trip-underline"
     className="w-full h-0.5 mt-1 rounded-full"
-    style={{ backgroundColor: "#E43D12" }}
+    style={{ backgroundColor: "#ff1d58" }}
     transition={{ type: "spring", stiffness: 400, damping: 30 }}
   />
 );

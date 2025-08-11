@@ -6,11 +6,10 @@ export const fetchGeocode = async (from, to) => {
       )}&to=${encodeURIComponent(to)}`
     );
 
+
     if (!res.ok) throw new Error("Failed to fetch distance");
 
     const data = await res.json();
-
-    console.log(data)
 
     return data;
   } catch (error) {

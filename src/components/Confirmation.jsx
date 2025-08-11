@@ -46,7 +46,9 @@ const BookingConfirmation = () => {
     setFromInput,
     setToInput,
     setVehicleList,
-    setconform
+    setconform,
+    duration,
+    tripType,
   } = useTrip();
 
   const handleChange = (e) => {
@@ -61,6 +63,7 @@ const BookingConfirmation = () => {
       ...form,
       from: fromInput,
       to: toInput,
+      tripType: tripType,
       vehicle: selectedVehicle,
       totalKms,
       baseFair,
@@ -73,7 +76,7 @@ const BookingConfirmation = () => {
     };
 
     const data = await ConformBooking(bookingData);
-    console.log("jk :", data);
+
 
     if (data.status === 200) {
       setForm({
@@ -85,7 +88,7 @@ const BookingConfirmation = () => {
       setStartDate([new Date()]);
       setFromInput("");
       setToInput("");
-      setVehicleList(false)
+      setVehicleList([])
       setconform(false)
       toast.error("please select pick up and drop location", {
         position: "top-center",
@@ -99,183 +102,161 @@ const BookingConfirmation = () => {
     { label: "Base Fare Per Km", value: `₹ ${baseFair}` },
     {
       label: "Total Base Fare",
-      value: `₹ ${(totalKms * baseFair).toFixed(
-        2
-      )} (${totalKms} km X ₹ ${baseFair})`,
+      value: `₹ ${(totalKms * baseFair).toFixed(2)} (${totalKms} km X ₹ ${baseFair})`,
+    },
+    {
+      label: "Duration",
+      value: (() => {
+        const durationSec = parseInt(duration);
+        const hours = Math.floor(durationSec / 3600);
+        const minutes = Math.floor((durationSec % 3600) / 60);
+        return `${hours} hr ${minutes} min`;
+      })(),
     },
     { label: "Driver Allowance", value: "₹ 400" },
     { label: "Permit Charges", value: "₹ 550" },
-    { label: "Toll Charges (Approx)", value: `₹ ${tollCharge}` },
+    {
+      label: "Toll Charges (Approx)",
+      value: `${tollCharge ? `₹ ${tollCharge}` : 'applicable'}`,
+    },
     { label: "Total", value: `₹ ${(totalKms * baseFair).toFixed(2)}` },
   ];
 
+
   return (
-    <div className="min-h-screen bg-[#FFF8E7] py-10 px-4">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="max-w-4xl mx-auto space-y-10"
-      >
-        <motion.h2
-          custom={1}
-          variants={fadeUp}
-          className="text-4xl font-bold text-center text-[#3A2E12] drop-shadow-sm"
+   <div className="min-h-screen  py-10 px-4">
+  <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={fadeUp}
+    className="max-w-4xl mx-auto space-y-10"
+  >
+    {/* Heading */}
+    <motion.h2
+      custom={1}
+      variants={fadeUp}
+      className="text-4xl font-bold text-center text-[#ff1d58] drop-shadow-sm"
+    >
+      Confirm Your Booking
+    </motion.h2>
+
+    {/* Travel Plan */}
+    <motion.div
+      custom={2}
+      variants={fadeUp}
+      className="bg-white shadow-xl rounded-2xl p-6 border border-[#ffc0d1] space-y-4"
+    >
+      <h3 className="text-xl font-semibold text-[#ff1d58]">
+        <MapPin className="inline w-5 h-5 mr-2 text-[#ff1d58]" />
+        Your Travel Plan
+      </h3>
+
+      <div className="bg-[#fff0f5] p-4 rounded-lg text-[#4a1e2d] space-y-1">
+        <p>
+          <MapPin className="inline w-4 h-4 text-green-600 mr-1" />
+          <strong>Pickup:</strong> {fromInput}
+        </p>
+        <p>
+          <MapPin className="inline w-4 h-4 text-red-600 mr-1" />
+          <strong>Drop:</strong> {toInput}
+        </p>
+      </div>
+
+      <h3 className="text-xl font-semibold text-[#ff1d58]">
+        <CarFront className="inline w-5 h-5 mr-2 text-[#ff1d58]" />
+        Vehicle Information
+      </h3>
+
+      <div className="bg-[#fff0f5] p-4 rounded-lg text-[#4a1e2d] grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <p>
+          <strong>Model:</strong> {selectedVehicle.type}
+        </p>
+        <p>
+          <strong>Seats:</strong> {selectedVehicle.capacity}
+        </p>
+      </div>
+
+      <h3 className="text-xl font-semibold text-[#ff1d58]">Fare Details</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {details.map((item, index) => (
+          <motion.div
+            key={index}
+            custom={2.5 + index * 0.2}
+            variants={fadeUp}
+            className={`flex justify-between px-4 py-2 rounded-md ${
+              index === details.length - 1
+                ? "bg-[#ffc0d1] font-bold text-[#4a1e2d]"
+                : "bg-gray-50"
+            }`}
+          >
+            <span>{item.label}</span>
+            <span>{item.value}</span>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+
+    {/* Passenger Form */}
+    <motion.form
+      onSubmit={handleSubmit}
+      custom={3}
+      variants={fadeUp}
+      className="bg-white shadow-xl rounded-2xl p-8 border border-[#ffc0d1] space-y-6"
+    >
+      <h3 className="text-xl font-semibold mb-4 text-[#ff1d58]">
+        Passenger Details
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {[
+          { label: "Name", name: "name", type: "text", icon: <User /> },
+          { label: "Mobile", name: "mobile", type: "tel", icon: <Phone /> },
+          { label: "Email", name: "email", type: "email", icon: <Mail /> },
+          { label: "Pick-Up Time", name: "pickupTime", type: "time", icon: <Calendar /> },
+        ].map((field, idx) => (
+          <div key={idx}>
+            <label htmlFor={field.name} className="block mb-1 font-medium">
+              {React.cloneElement(field.icon, { className: "inline w-4 h-4 mr-1" })} {field.label}
+            </label>
+            <input
+              type={field.type}
+              name={field.name}
+              id={field.name}
+              required
+              value={form[field.name]}
+              onChange={handleChange}
+              className="w-full border border-[#ff1d58] rounded-lg px-4 py-2 shadow-sm focus:ring-[#ff1d58]"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="text-center pt-6">
+        <button
+          type="submit"
+          className="bg-[#ff1d58] text-white text-lg px-8 py-3 rounded-xl shadow-lg hover:bg-[#e0144d] transition-all"
         >
-          Confirm Your Booking
-        </motion.h2>
+          Confirm Booking
+        </button>
+      </div>
+    </motion.form>
 
-        <motion.div
-          custom={2}
-          variants={fadeUp}
-          className="bg-white shadow-xl rounded-2xl p-6 border border-[#FBE7B9] space-y-4"
-        >
-          <h3 className="text-xl font-semibold text-[#EFB11D]">
-            <MapPin className="inline w-5 h-5 mr-2 text-[#EFB11D]" />
-            Your Travel Plan
-          </h3>
+    {/* Info */}
+    <motion.div
+      custom={4}
+      variants={fadeUp}
+      className="text-center text-[#4a1e2d] mt-10"
+    >
+      <Info className="inline w-5 h-5 mr-2 text-[#ff1d58]" />
+      <p className="text-lg">
+        Thank you for choosing <strong>Pallaku Cab Service</strong>. Your ride
+        will be safe, comfortable, and timely. We’ll contact you shortly to
+        confirm your trip.
+      </p>
+    </motion.div>
+  </motion.div>
+</div>
 
-          <div className="bg-[#FFF8E7] p-4 rounded-lg text-[#3A2E12] space-y-1">
-            <p>
-              <MapPin className="inline w-4 h-4 text-green-600 mr-1" />
-              <strong>Pickup:</strong> {fromInput}
-            </p>
-            <p>
-              <MapPin className="inline w-4 h-4 text-red-600 mr-1" />
-              <strong>Drop:</strong> {toInput}
-            </p>
-          </div>
-
-          <h3 className="text-xl font-semibold text-[#EFB11D]">
-            <CarFront className="inline w-5 h-5 mr-2 text-[#EFB11D]" />
-            Vehicle Information
-          </h3>
-
-          <div className="bg-[#FFF8E7] p-4 rounded-lg text-[#3A2E12] grid grid-cols-2 sm:grid-cols-3 gap-2">
-            <p>
-              <strong>Model:</strong> {selectedVehicle.type}
-            </p>
-            <p>
-              <strong>Seats:</strong> {selectedVehicle.capacity}
-            </p>
-          </div>
-
-          <h3 className="text-xl font-semibold text-[#EFB11D]">Fare Details</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {details.map((item, index) => (
-              <motion.div
-                key={index}
-                custom={2.5 + index * 0.2}
-                variants={fadeUp}
-                className={`flex justify-between px-4 py-2 rounded-md ${
-                  index === details.length - 1
-                    ? "bg-[#FBE7B9] font-bold text-[#3A2E12]"
-                    : "bg-gray-50"
-                }`}
-              >
-                <span>{item.label}</span>
-                <span>{item.value}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.form
-          onSubmit={handleSubmit}
-          custom={3}
-          variants={fadeUp}
-          className="bg-white shadow-xl rounded-2xl p-8 border border-[#FBE7B9] space-y-6"
-        >
-          <h3 className="text-xl font-semibold mb-4 text-[#EFB11D]">
-            Passenger Details
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block mb-1 font-medium">
-                <User className="inline w-4 h-4 mr-1" /> Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                required
-                value={form.name}
-                onChange={handleChange}
-                className="w-full border border-[#EFB11D] rounded-lg px-4 py-2 shadow-sm focus:ring-[#EFB11D]"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="mobile" className="block mb-1 font-medium">
-                <Phone className="inline w-4 h-4 mr-1" /> Mobile
-              </label>
-              <input
-                type="tel"
-                name="mobile"
-                id="mobile"
-                required
-                value={form.mobile}
-                onChange={handleChange}
-                className="w-full border border-[#EFB11D] rounded-lg px-4 py-2 shadow-sm focus:ring-[#EFB11D]"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block mb-1 font-medium">
-                <Mail className="inline w-4 h-4 mr-1" /> Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                value={form.email}
-                onChange={handleChange}
-                className="w-full border border-[#EFB11D] rounded-lg px-4 py-2 shadow-sm focus:ring-[#EFB11D]"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="pickupTime" className="block mb-1 font-medium">
-                <Calendar className="inline w-4 h-4 mr-1" /> Pick-Up Time
-              </label>
-              <input
-                type="time"
-                name="pickupTime"
-                id="pickupTime"
-                required
-                value={form.pickupTime}
-                onChange={handleChange}
-                className="w-full border border-[#EFB11D] rounded-lg px-4 py-2 shadow-sm focus:ring-[#EFB11D]"
-              />
-            </div>
-          </div>
-
-          <div className="text-center pt-6">
-            <button
-              type="submit"
-              className="bg-[#EFB11D] text-white text-lg px-8 py-3 rounded-xl shadow-lg hover:bg-[#C4900F] transition-all"
-            >
-              Confirm Booking
-            </button>
-          </div>
-        </motion.form>
-
-        <motion.div
-          custom={4}
-          variants={fadeUp}
-          className="text-center text-[#3A2E12] mt-10"
-        >
-          <Info className="inline w-5 h-5 mr-2 text-[#EFB11D]" />
-          <p className="text-lg">
-            Thank you for choosing <strong>Pallaku Cab Service</strong>. Your
-            ride will be safe, comfortable, and timely. We’ll contact you
-            shortly to confirm your trip.
-          </p>
-        </motion.div>
-      </motion.div>
-    </div>
   );
 };
 

@@ -4,8 +4,8 @@ const TripContext = createContext();
 
 export const TripContextProvider = ({ children }) => {
   const [tripType, setTripType] = useState("onewaytrip");
-  const [fromInput, setFromInput] = useState("");
-  const [toInput, setToInput] = useState("");
+  const [fromInput, setFromInput] = useState("Assam");
+  const [toInput, setToInput] = useState("Delhi");
   const [vehicleList, setVehicleList] = useState(false);
   const [totalKms, setTotalKms] = useState(null);
   const [vehiclePriceList, setVehiclePriceList] = useState(null);
@@ -14,6 +14,11 @@ export const TripContextProvider = ({ children }) => {
   const [baseFair, setBaseFair] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [startDate, setStartDate] = useState([new Date()]);
+  const [encodedPolyline, setEncodedPolyline] = useState(null);
+  const [apiKey, setApiKey] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [adminPhone, setAdminPhone] = useState(null)
+  const [vehicles, setVehicles] = useState([]);
 
   return (
     <TripContext.Provider
@@ -40,6 +45,12 @@ export const TripContextProvider = ({ children }) => {
         selectedVehicle,
         startDate,
         setStartDate,
+        encodedPolyline,
+        setEncodedPolyline,
+        apiKey,
+        setApiKey,
+        duration,
+        setDuration, adminPhone, setAdminPhone, vehicles, setVehicles
       }}
     >
       {children}

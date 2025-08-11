@@ -6,28 +6,38 @@ import VehiclesList from "./components/VehiclesList";
 import Experience from "./components/Experience";
 import Fleets from "./components/Fleets";
 import Footer from "./components/Footer";
-import IndustryForm from "./components/IndustryForm";
-import IndustryForm1 from "./components/IndustryForm1";
-import IndustryForm2 from "./components/IndustryFrom2";
-import IndustryForm3 from "./components/IndustryForm3";
-import IndustryForm4 from "./components/IndustryForm4";
 import { useTrip } from "./Contexts/TripType";
 import getPriceList from "./Services/getPriceList";
 import BookingConfirmation from "./components/Confirmation";
 import { ToastContainer, toast, Slide, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RouteMap from "./components/RouteMap";
+import { getAllVehicles } from "./Services/getAllVehicles";
+import AboutUs from "./components/AboutUs";
+
 
 function App() {
-  const { vehicleList, setVehiclePriceList, conform } = useTrip();
+  const { vehicleList, setVehiclePriceList, conform, adminPhone, setAdminPhone, setVehicles } = useTrip();
   const bookingRef = useRef(null);
   const vehicleRef = useRef(null);
 
   const fetchPrices = useCallback(async () => {
     const data = await getPriceList();
-    setVehiclePriceList(data);
+    setVehiclePriceList(data.priceList);
+    setAdminPhone(data.adminPhone)
   }, []);
 
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getAllVehicles();
+        console.log(response)
+        setVehicles(response)
+      } catch (error) {
+        console.error("Failed to fetch trips:", error);
+      }
+    };
+    getData();
     fetchPrices();
   }, [fetchPrices]);
 
@@ -46,20 +56,29 @@ function App() {
   return (
     <div className="h-full w-full">
       <ToastContainer
-        transition={Slide} // or Zoom
-        position="top-right"
+        transition={Slide}
+        position="top-center"
         autoClose={3000}
         hideProgressBar={false}
         closeOnClick
         pauseOnHover
         draggable
+        toastClassName={() =>
+          "relative flex items-start space-x-3 max-w-sm w-full bg-white text-gray-800 rounded-lg shadow-lg py-4 px-4 border-l-4 border-white overflow-hidden"
+        }
+        bodyClassName={() =>
+          "flex flex-col text-sm font-medium whitespace-pre-wrap break-words"
+        }
+        progressClassName="Toastify__progress-bar !left-0 !ml-0 !w-full"
+        closeButton={false}
       />
 
-      <Header />
+
+      <Header adminPhone={adminPhone} />
       <main>
-        <div className="relative flex flex-col bg-[#F9EBE0]">
+        <div className="relative flex flex-col bg-[#f8f5ef]">
           <Banner />
-          <Location />
+         <Location /> 
 
           {vehicleList && (
             <div ref={vehicleRef}>
@@ -68,20 +87,16 @@ function App() {
           )}
           {conform && (
             <div ref={bookingRef}>
+              <RouteMap />
               <BookingConfirmation />
             </div>
           )}
           <Experience />
+          <AboutUs/>
           <Fleets />
         </div>
       </main>
       <Footer />
-
-      {/* <IndustryForm /> */}
-      {/* <IndustryForm1 />
-      <IndustryForm2 />
-      <IndustryForm3 />
-      <IndustryForm4 /> */}
     </div>
   );
 }

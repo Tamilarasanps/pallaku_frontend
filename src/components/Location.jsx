@@ -14,6 +14,9 @@ const Location = () => {
     setTotalKms,
     setTollCharge,
     tripType,
+    setEncodedPolyline,
+    setApiKey,
+    setDuration
   } = useTrip();
 
   const handleSearch = useCallback(async (fromInput, toInput) => {
@@ -32,19 +35,22 @@ const Location = () => {
       }
       if (data) {
         const distance = Number(data.distanceMeters) || "-";
-        setTotalKms(distance);
+        setTotalKms(()=>tripType==='onwaytrip' ? distance : distance*2);
         setVehicleList(true);
         setTollCharge(() =>
           tripType === "onewaytrip"
             ? data?.tolls[0]?.units / 2
             : data?.tolls[0]?.units || "applicable"
         );
+        setEncodedPolyline(data?.polyline);
+        setApiKey(data?.apiKey);
+        setDuration(data?.duration);
       }
     }
   }, []);
 
   return (
-    <div className=" min-h-max w-[90%] bg-white -mt-12 rounded-md shadow-md mx-auto flex flex-col justify-center items-center pb-12">
+    <section id="booking" className=" min-h-max w-[90%] bg-[#ffffff] z-50 lg:-mt-12 -mt-2 rounded-md shadow-md mx-auto flex flex-col justify-center items-center pb-12">
       <TripSwitcher />
       <div className="flex flex-col lg:flex-row lg:w-full">
         <FromTo />
@@ -52,14 +58,14 @@ const Location = () => {
       </div>
 
       <button
-        className=" px-12 py-4 rounded-full text-white font-bold bg-[#E43D12] mt-8"
+        className=" px-12 py-4 rounded-full text-white font-bold bg-[#ff1d58] mt-8"
         onClick={() => {
           handleSearch(fromInput, toInput);
         }}
       >
         Search
       </button>
-    </div>
+    </section>
   );
 };
 
