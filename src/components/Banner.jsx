@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import car from "../assets/travels.jpg";
+import banner from "../assets/car.jpg";
+import banner1 from "../assets/istockphoto.jpg";
+import banner2 from "../assets/yellowtaxi.png";
 
 const Banner = () => {
   return (
     <div className="relative w-full aspect-[21/9] max-h-[600px]  mx-auto overflow-hidden">
       <motion.img
-        src={car}
+        src={banner}
         alt="Banner"
         className="w-full h-full object-cover"
         initial={{ x: 100, opacity: 0 }}
@@ -28,13 +31,13 @@ const Banner = () => {
             <h1 className="text-lg md:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-yellow-400 via-red-400 to-green-400 bg-[length:200%_200%] bg-clip-text text-transparent animate-[gradientShift_6s_ease_infinite]">
               Explore with Comfort
             </h1>
-            <p className="text-xs md:text-md lg:text-xl text-gray-200">
+            <p className="text-xs md:text-md lg:text-xl text-gray-200 font-bold">
               Book your journey with trusted rides and great deals across all
               destinations.
             </p>
-            <p className="text-blue-700 lg:text-lg text-xs font-medium animate-bounce duration-1000 delay-300">
+            <p className="text-white  lg:text-lg text-xs font-medium animate-bounce duration-1000 delay-300">
               📞 Call us now:{" "}
-              <span className="font-semibold">+91 7695811933</span>
+              <span className="font-bold ">+91 7695811933</span>
             </p>
           </div>
         </motion.div>
