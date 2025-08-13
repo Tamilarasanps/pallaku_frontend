@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTrip } from "../Contexts/TripType";
-import ConformBooking from "../Services/COnformBooking";
+import ConformBooking from "../Services/ConformBooking";
 import { toast } from "react-toastify";
 
 const fadeUp = {
