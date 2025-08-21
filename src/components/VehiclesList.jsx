@@ -56,7 +56,7 @@ const VehiclesList = () => {
               {/* Image */}
               <div className="max-w-max lg:w-1/4 h-40 bg-[#fff0f5] mx-auto rounded-md overflow-hidden">
                 <img
-                  src={`${BASE_URL}/image/${car.img}`}
+                  src={`https://pallaku-backend.onrender.com/image/${car.img}`}
                   alt={car.type}
                   className="max-h-full"
                 />

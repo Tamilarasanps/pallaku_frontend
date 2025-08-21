@@ -5,7 +5,7 @@ const ConformBooking = async (bookingData) => {
   try {
     const response = await axios.post(
       // "http://localhost:5000/conform",
-      `${BASE_URL}/conform`,
+      "https://pallaku-backend.onrender.com/conform",
       bookingData
     );
     console.log(response);

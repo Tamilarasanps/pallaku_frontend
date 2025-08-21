@@ -30,7 +30,7 @@ const Fleets = () => {
               {/* image */}
               <div className="w-full aspect-[2/1] rounded-md overflow-hidden ">
                 <img
-                  src={`${BASE_URL}/image/${val.img}`}
+                  src={`https://pallaku-backend.onrender.com/image/${val.img}`}
                   alt={val.type}
                   className="object-cover w-full h-full"
                 />
