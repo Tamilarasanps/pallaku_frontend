@@ -1,4 +1,4 @@
-import { BsArrowUp } from "react-icons/bs"; 
+import { BsArrowUp } from "react-icons/bs";
 import { GoArrowSwitch } from "react-icons/go";
 import { useTrip } from "../Contexts/TripType";
 import BASE_URL from "../Hooks/apiUrl";
@@ -8,7 +8,7 @@ const Fleets = () => {
 
   return (
     <section
-      id="tarrifs"
+      id="tariffs"
       className="mt-16 flex flex-col items-center px-4 py-2 bg-[#f8f5ef]"
     >
       {/* header */}
@@ -30,6 +30,7 @@ const Fleets = () => {
               {/* image */}
               <div className="w-full aspect-[2/1] rounded-md overflow-hidden ">
                 <img
+                  // src={`http://localhost:5000/image/${val.img}`}
                   src={`https://pallaku-backend.onrender.com/image/${val.img}`}
                   alt={val.type}
                   className="object-cover w-full h-full"

@@ -3,9 +3,9 @@ import { createContext, useContext, useState } from "react";
 const TripContext = createContext();
 
 export const TripContextProvider = ({ children }) => {
-  const [tripType, setTripType] = useState("onewaytrip");
-  const [fromInput, setFromInput] = useState("Assam");
-  const [toInput, setToInput] = useState("Delhi");
+  const [tripType, setTripType] = useState("");
+  const [fromInput, setFromInput] = useState("");
+  const [toInput, setToInput] = useState("");
   const [vehicleList, setVehicleList] = useState(false);
   const [totalKms, setTotalKms] = useState(null);
   const [vehiclePriceList, setVehiclePriceList] = useState(null);
@@ -17,8 +17,9 @@ export const TripContextProvider = ({ children }) => {
   const [encodedPolyline, setEncodedPolyline] = useState(null);
   const [apiKey, setApiKey] = useState(null);
   const [duration, setDuration] = useState(null);
-  const [adminPhone, setAdminPhone] = useState(null)
+  const [adminPhone, setAdminPhone] = useState(null);
   const [vehicles, setVehicles] = useState([]);
+  const [permitCharges, setPermitCharges] = useState(0);
 
   return (
     <TripContext.Provider
@@ -50,7 +51,13 @@ export const TripContextProvider = ({ children }) => {
         apiKey,
         setApiKey,
         duration,
-        setDuration, adminPhone, setAdminPhone, vehicles, setVehicles
+        setDuration,
+        adminPhone,
+        setAdminPhone,
+        vehicles,
+        setVehicles,
+        permitCharges,
+        setPermitCharges,
       }}
     >
       {children}

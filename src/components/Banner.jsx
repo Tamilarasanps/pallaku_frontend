@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import car from "../assets/travels.jpg";
 import banner from "../assets/car.jpg";
-import banner1 from "../assets/istockphoto.jpg";
-import banner2 from "../assets/yellowtaxi.png";
+
 
 const Banner = () => {
   return (
@@ -28,7 +27,7 @@ const Banner = () => {
           transition={{ duration: 1 }}
         >
           <div className="lg:w-fit w-full space-y-3">
-            <h1 className="text-lg md:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-yellow-400 via-red-400 to-green-400 bg-[length:200%_200%] bg-clip-text text-transparent animate-[gradientShift_6s_ease_infinite]">
+            <h1 className="text-lg md:text-3xl lg:text-5xl font-bold bg-gradient-to-r from-blue-400 via-green-400 to-purple-400 bg-[length:200%_200%] bg-clip-text text-transparent animate-[gradientShift_6s_ease_infinite]">
               Explore with Comfort
             </h1>
             <p className="text-xs md:text-md lg:text-xl text-gray-200 font-bold">
@@ -36,8 +35,7 @@ const Banner = () => {
               destinations.
             </p>
             <p className="text-white  lg:text-lg text-xs font-medium animate-bounce duration-1000 delay-300">
-              📞 Call us now:{" "}
-              <span className="font-bold ">+91 7695811933</span>
+              📞 Call us now: <span className="font-bold ">+91 7695811933</span>
             </p>
           </div>
         </motion.div>

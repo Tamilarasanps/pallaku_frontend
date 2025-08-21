@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SlArrowDown } from "react-icons/sl";
 import { IoPeopleSharp } from "react-icons/io5";
 import { RiLuggageCartLine } from "react-icons/ri";
@@ -19,6 +19,7 @@ const VehiclesList = () => {
     setSelectedVehicle,
     vehicles,
     startDate,
+    permitCharges,
   } = useTrip();
 
   const handleToggle = (index) => {
@@ -31,7 +32,7 @@ const VehiclesList = () => {
         Vehicles List
       </h1>
       <p className="text-[#4a1e2d] mt-4 text-center text-sm md:text-base">
-        One-way trip includes a 1 hr halt and tea breaks along the journey.
+        Select a perfect vehicle for our comfort journey
       </p>
 
       {vehicles.map((car, index) => {
@@ -56,6 +57,7 @@ const VehiclesList = () => {
               {/* Image */}
               <div className="max-w-max lg:w-1/4 h-40 bg-[#fff0f5] mx-auto rounded-md overflow-hidden">
                 <img
+                  // src={`http://localhost:5000/image/${car.img}`}
                   src={`https://pallaku-backend.onrender.com/image/${car.img}`}
                   alt={car.type}
                   className="max-h-full"
@@ -67,9 +69,7 @@ const VehiclesList = () => {
                 <h1 className="font-bold text-xl md:text-2xl text-[#ff1d58]">
                   {car.type}
                 </h1>
-                <p className="text-[#4a1e2d] mt-2">
-                  {car.options.join(" / ")}
-                </p>
+                <p className="text-[#4a1e2d] mt-2">{car.options.join(" / ")}</p>
 
                 <div
                   onClick={() => handleToggle(index)}
@@ -127,12 +127,11 @@ const VehiclesList = () => {
                   className="lg:w-[90%] w-full bg-white flex flex-col justify-center items-center py-4 border-t border-[#ffc0d1]"
                 >
                   <div className="px-8 py-2 bg-[#ff1d58] rounded-full shadow">
-                    <h1 className="text-white font-semibold">
-                      Fair Details
-                    </h1>
+                    <h1 className="text-white font-semibold">Fair Details</h1>
                   </div>
                   <FairDetails
                     totalKms={totalKms}
+                    permitCharges={permitCharges}
                     baseFair={
                       tripType === "onewaytrip"
                         ? car.oneWayPrice

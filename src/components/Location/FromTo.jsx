@@ -1,36 +1,109 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 
 const libraries = ["places"];
+const mapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-export default function FromTo({ onSelectFrom, onSelectTo }) {
+
+export default function FromTo({
+  fromInput,
+  toInput,
+  setFromInput,
+  setToInput,
+  permitCharges,
+  setPermitCharges,
+}) {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "",
+    googleMapsApiKey: mapsApiKey, // replace with actual key
     libraries,
   });
 
   const fromRef = useRef(null);
   const toRef = useRef(null);
 
+  const [fromState, setFromState] = useState("");
+  const [toState, setToState] = useState("");
+  const [noResults, setNoResults] = useState(false);
+console.log(fromState)
+console.log(toState)
+  // Extract state from place object
+  const getStateFromPlace = (place) => {
+    if (!place || !place.address_components) return "";
+    const stateComp = place.address_components.find((c) =>
+      c.types.includes("administrative_area_level_1")
+    );
+    return stateComp ? stateComp.long_name : "";
+  };
+
+  // Check states and update permit charges
+  useEffect(() => {
+    if (fromState && toState) {
+      if (fromState !== toState) {
+        setPermitCharges(550); // apply permit charges
+      } else {
+        setPermitCharges(0); // no permit charges
+      }
+    }
+  }, [fromState, toState, setPermitCharges]);
+
+  // When user selects from dropdown
   const handleFromPlaceChanged = () => {
-    const place = fromRef.current.getPlace();
+    const place = fromRef.current?.getPlace();
     if (place && place.place_id) {
-      onSelectFrom(place);
-    } else {
-      toast.error("Unable to select 'From' location");
+      setNoResults(false);
+      setFromInput(place.formatted_address || place.name || "");
+      setFromState(getStateFromPlace(place));
     }
   };
 
+  // When user selects from dropdown
   const handleToPlaceChanged = () => {
-    const place = toRef.current.getPlace();
+    const place = toRef.current?.getPlace();
     if (place && place.place_id) {
-      onSelectTo(place);
-    } else {
-      toast.error("Unable to select 'To' location");
+      setNoResults(false);
+      setToInput(place.formatted_address || place.name || "");
+      setToState(getStateFromPlace(place));
     }
   };
 
+  // If user clicks outside without selecting → take first suggestion
+  const handleBlur = (value, setFn, label, setStateFn) => {
+    if (!value) return;
+
+    const service = new window.google.maps.places.AutocompleteService();
+    service.getPlacePredictions(
+      { input: value, componentRestrictions: { country: "in" } },
+      (predictions, status) => {
+        if (
+          status === window.google.maps.places.PlacesServiceStatus.OK &&
+          predictions &&
+          predictions.length > 0
+        ) {
+          const placesService = new window.google.maps.places.PlacesService(
+            document.createElement("div")
+          );
+          placesService.getDetails(
+            { placeId: predictions[0].place_id },
+            (place, detailsStatus) => {
+              if (
+                detailsStatus ===
+                  window.google.maps.places.PlacesServiceStatus.OK &&
+                place
+              ) {
+                setFn(place.formatted_address || predictions[0].description);
+                setStateFn(getStateFromPlace(place));
+              }
+            }
+          );
+        } else {
+          toast.error(`No valid ${label} found`);
+          setNoResults(true);
+        }
+      }
+    );
+  };
+  console.log(permitCharges);
   if (!isLoaded) return <div>Loading...</div>;
   if (loadError) return <div>Error loading maps</div>;
 
@@ -45,12 +118,22 @@ export default function FromTo({ onSelectFrom, onSelectTo }) {
         <label className="absolute -top-3 left-2 bg-white px-1 text-sm font-semibold text-[#ff1d58]">
           From
         </label>
-        <Autocomplete onPlaceChanged={handleFromPlaceChanged}>
+        <Autocomplete
+          onLoad={(autocomplete) => (fromRef.current = autocomplete)}
+          onPlaceChanged={handleFromPlaceChanged}
+          options={{
+            componentRestrictions: { country: "in" },
+          }}
+        >
           <input
             type="text"
-            className="px-4 w-full h-12 border-2 border-gray-400 rounded-md outline-none"
+            value={fromInput}
+            onChange={(e) => setFromInput(e.target.value)}
+            onBlur={(e) =>
+              handleBlur(e.target.value, setFromInput, "From", setFromState)
+            }
+            className="px-4 w-full h-12 border-2 border-gray-400 rounded-md outline-none focus:border-[#ff1d58]"
             placeholder="Enter starting location"
-            ref={fromRef}
           />
         </Autocomplete>
       </div>
@@ -60,15 +143,38 @@ export default function FromTo({ onSelectFrom, onSelectTo }) {
         <label className="absolute -top-3 left-2 bg-white px-1 text-sm font-semibold text-[#ff1d58]">
           To
         </label>
-        <Autocomplete onPlaceChanged={handleToPlaceChanged}>
+        <Autocomplete
+          onLoad={(autocomplete) => (toRef.current = autocomplete)}
+          onPlaceChanged={handleToPlaceChanged}
+          options={{
+            componentRestrictions: { country: "in" },
+          }}
+        >
           <input
             type="text"
-            className="px-4 w-full h-12 border-2 border-gray-400 rounded-md outline-none"
+            value={toInput}
+            onChange={(e) => setToInput(e.target.value)}
+            onBlur={(e) =>
+              handleBlur(e.target.value, setToInput, "To", setToState)
+            }
+            className="px-4 w-full h-12 border-2 border-gray-400 rounded-md outline-none focus:border-[#ff1d58]"
             placeholder="Enter destination"
-            ref={toRef}
           />
         </Autocomplete>
       </div>
+
+      {/* Permit Charges Info */}
+      {/* <p className="text-gray-700 font-semibold mt-4">
+        Permit Charges:{" "}
+        <span className="text-[#ff1d58]">₹ {permitCharges}</span>
+      </p> */}
+
+      {/* No results message */}
+      {noResults && (
+        <p className="text-red-500 text-sm mt-2">
+          🚫 Sorry, no suggestions found. Try a different location.
+        </p>
+      )}
     </div>
   );
 }

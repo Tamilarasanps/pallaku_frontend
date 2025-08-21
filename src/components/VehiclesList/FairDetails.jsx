@@ -1,6 +1,19 @@
 import { motion } from "framer-motion";
 
-const FairDetails = ({ totalKms, baseFair, totalPrice, tollCharge, driverAllowance }) => {
+const FairDetails = ({
+  totalKms,
+  baseFair,
+  totalPrice,
+  tollCharge,
+  driverAllowance,
+  fromInput,
+  toInput,
+  permitCharges,
+}) => {
+  console.log("from", fromInput);
+  console.log("totalKms", totalKms);
+  console.log("permitCharges", permitCharges);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,7 +49,7 @@ const FairDetails = ({ totalKms, baseFair, totalPrice, tollCharge, driverAllowan
           </tr>
           <tr>
             <td className="px-4 py-1">Permit Charges</td>
-            <td className="px-4 py-1">₹ 550</td>
+            <td className="px-4 py-1">{permitCharges}</td>
           </tr>
           <tr>
             <td className="px-4 py-1">Toll Charges (Approx)</td>

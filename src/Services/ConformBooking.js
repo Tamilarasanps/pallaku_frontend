@@ -19,5 +19,4 @@ const ConformBooking = async (bookingData) => {
     return null;
   }
 };
-
 export default ConformBooking;

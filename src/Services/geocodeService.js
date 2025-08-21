@@ -3,6 +3,7 @@ import BASE_URL from "../Hooks/apiUrl";
 export const fetchGeocode = async (from, to) => {
   try {
     const res = await fetch(
+      // `http://localhost:5000/distance?from=${encodeURIComponent(
       `https://pallaku-backend.onrender.com/distance?from=${encodeURIComponent(
         from
       )}&to=${encodeURIComponent(to)}`

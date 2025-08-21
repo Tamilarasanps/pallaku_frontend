@@ -15,24 +15,33 @@ import RouteMap from "./components/RouteMap";
 import { getAllVehicles } from "./Services/getAllVehicles";
 import AboutUs from "./components/AboutUs";
 
+import AppRoutes from "./Routes";
+import SuccessPage from "./components/SuccessPage";
 
 function App() {
-  const { vehicleList, setVehiclePriceList, conform, adminPhone, setAdminPhone, setVehicles } = useTrip();
+  const {
+    vehicleList,
+    setVehiclePriceList,
+    conform,
+    adminPhone,
+    setAdminPhone,
+    setVehicles,
+  } = useTrip();
   const bookingRef = useRef(null);
   const vehicleRef = useRef(null);
 
   const fetchPrices = useCallback(async () => {
     const data = await getPriceList();
     setVehiclePriceList(data.priceList);
-    setAdminPhone(data.adminPhone)
+    setAdminPhone(data.adminPhone);
   }, []);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await getAllVehicles();
-        console.log(response)
-        setVehicles(response)
+        console.log(response);
+        setVehicles(response);
       } catch (error) {
         console.error("Failed to fetch trips:", error);
       }
@@ -64,7 +73,7 @@ function App() {
         pauseOnHover
         draggable
         toastClassName={() =>
-          "relative flex items-start space-x-3 max-w-sm w-full bg-white text-gray-800 rounded-lg shadow-lg py-4 px-4 border-l-4 border-white overflow-hidden"
+          "relative z-[9999] flex items-start space-x-3 max-w-sm w-full bg-white text-gray-800 rounded-lg shadow-lg py-4 px-4 border-l-4 border-white overflow-hidden"
         }
         bodyClassName={() =>
           "flex flex-col text-sm font-medium whitespace-pre-wrap break-words"
@@ -73,12 +82,11 @@ function App() {
         closeButton={false}
       />
 
-
       <Header adminPhone={adminPhone} />
       <main>
         <div className="relative flex flex-col bg-[#f8f5ef]">
           <Banner />
-         <Location /> 
+          <Location />
 
           {vehicleList && (
             <div ref={vehicleRef}>
@@ -92,7 +100,7 @@ function App() {
             </div>
           )}
           <Experience />
-          <AboutUs/>
+          <AboutUs />
           <Fleets />
         </div>
       </main>

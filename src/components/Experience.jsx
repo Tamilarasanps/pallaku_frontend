@@ -2,6 +2,7 @@ import { MdSecurity, MdAccessTime, MdPayments } from "react-icons/md";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BiSupport } from "react-icons/bi";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 
 const Experience = () => {
   const arr = [
@@ -32,6 +33,10 @@ const Experience = () => {
     },
   ];
 
+  // const navigate = useNavigate();
+  // const navi = () => {
+  //   navigate("/successPage");
+  // };
   return (
     <div className="mt-16 flex flex-col items-center px-4 py-12 ">
       {/* Header */}
@@ -39,7 +44,8 @@ const Experience = () => {
         Experience the Difference
       </h1>
       <p className="text-[##4a1e2d] mt-4 text-center max-w-xl">
-        Redefining travel with unmatched comfort, reliability, and services tailored to your needs.
+        Redefining travel with unmatched comfort, reliability, and services
+        tailored to your needs.
       </p>
 
       {/* Icon Cards */}
@@ -52,12 +58,15 @@ const Experience = () => {
             transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
             className="w-72 h-72 bg-white flex flex-col justify-between items-center p-6 border-2 shadow-md rounded-xl text-center"
           >
-            <h2 className="font-bold text-lg text-gray-800 mt-4">{val.header}</h2>
+            <h2 className="font-bold text-lg text-gray-800 mt-4">
+              {val.header}
+            </h2>
             <div className="mt-4 mb-4">{val.icon}</div>
             <p className="text-sm text-gray-500 mt-2">{val.body}</p>
           </motion.div>
         ))}
       </div>
+      
     </div>
   );
 };

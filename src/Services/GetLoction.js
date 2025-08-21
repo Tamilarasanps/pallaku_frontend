@@ -8,7 +8,8 @@ export const GetLocation = async (value) => {
 
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/location/search",
+      "https://pallaku-backend.onrender.com/api/location/search",
+      // "http://localhost:5000/api/location/search",
       {
         params: { q: value },
       }
