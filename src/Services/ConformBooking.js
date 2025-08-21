@@ -1,9 +1,11 @@
 import axios from "axios";
+import BASE_URL from "../Hooks/apiUrl";
 
 const ConformBooking = async (bookingData) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/conform",
+      // "http://localhost:5000/conform",
+      `${BASE_URL}/conform`,
       bookingData
     );
     console.log(response);

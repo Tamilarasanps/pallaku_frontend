@@ -6,6 +6,7 @@ import { TbAirConditioning } from "react-icons/tb";
 import FairDetails from "./VehiclesList/FairDetails";
 import { useTrip } from "../Contexts/TripType";
 import { motion, AnimatePresence } from "framer-motion";
+import BASE_URL from "../Hooks/apiUrl";
 
 const VehiclesList = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -55,7 +56,7 @@ const VehiclesList = () => {
               {/* Image */}
               <div className="max-w-max lg:w-1/4 h-40 bg-[#fff0f5] mx-auto rounded-md overflow-hidden">
                 <img
-                  src={`http://localhost:5000/image/${car.img}`}
+                  src={`${BASE_URL}/image/${car.img}`}
                   alt={car.type}
                   className="max-h-full"
                 />

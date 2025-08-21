@@ -1,6 +1,7 @@
 import { BsArrowUp } from "react-icons/bs"; 
 import { GoArrowSwitch } from "react-icons/go";
 import { useTrip } from "../Contexts/TripType";
+import BASE_URL from "../Hooks/apiUrl";
 
 const Fleets = () => {
   const { vehiclePriceList, vehicles } = useTrip();
@@ -29,7 +30,7 @@ const Fleets = () => {
               {/* image */}
               <div className="w-full aspect-[2/1] rounded-md overflow-hidden ">
                 <img
-                  src={`http://localhost:5000/image/${val.img}`}
+                  src={`${BASE_URL}/image/${val.img}`}
                   alt={val.type}
                   className="object-cover w-full h-full"
                 />
