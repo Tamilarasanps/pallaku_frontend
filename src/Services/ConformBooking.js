@@ -1,5 +1,4 @@
 import axios from "axios";
-import BASE_URL from "../Hooks/apiUrl";
 
 const ConformBooking = async (bookingData) => {
   try {
@@ -8,14 +7,14 @@ const ConformBooking = async (bookingData) => {
       "https://pallaku-backend.onrender.com/conform",
       bookingData
     );
-    console.log(response);
+    // console.log("sending data to backend", response);
     if (response.status !== 200) {
       throw new Error("Booking confirmation failed");
     }
 
     return response;
   } catch (error) {
-    console.error("Booking error:", error.message);
+    // console.error("Booking error:", error.message);
     return null;
   }
 };

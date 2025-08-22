@@ -51,9 +51,9 @@ const Location = () => {
         }
 
         const distance = Number(data.distanceMeters) || "-";
-        console.log("triptype inside search:", tripType);
-        console.log("distance :", distance);
-        console.log("toll :", data?.tolls[0]);
+        // console.log("triptype inside search:", tripType);
+        // console.log("distance :", distance);
+        // console.log("toll :", data?.tolls[0]);
 
         setTotalKms(() =>
           tripType === "onewaytrip" ? distance : distance * 2

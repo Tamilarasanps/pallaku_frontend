@@ -58,6 +58,8 @@ const BookingConfirmation = () => {
     setForm({ ...form, [name]: value });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     if (e) e.preventDefault(); // Run only if e exists
 
@@ -78,6 +80,8 @@ const BookingConfirmation = () => {
     };
 
     const data = await ConformBooking(bookingData);
+    const bookingId = data.data.newBooking._id;
+    // setBookingId(data);
 
     if (data?.status === 200) {
       setForm({
@@ -95,12 +99,12 @@ const BookingConfirmation = () => {
         position: "top-center",
         autoClose: 3000,
       });
+
+      // navigate("/successPage", { state: { id: bookingId } });
+      navigate(`/successPage/${bookingId}`);
+      window.location.reload();
     }
   };
-
-  useEffect(() => {
-    handleSubmit();
-  }, []);
 
   const [loading, setLoading] = useState(false);
   const handleConfirm = async (e) => {

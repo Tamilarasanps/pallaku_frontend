@@ -8,7 +8,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/successPage" element={<SuccessPage />} />
+      <Route path="/successPage/:id" element={<SuccessPage />} />
     </Routes>
   );
 }

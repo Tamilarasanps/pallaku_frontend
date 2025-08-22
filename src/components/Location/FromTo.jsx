@@ -25,8 +25,6 @@ export default function FromTo({
   const [fromState, setFromState] = useState("");
   const [toState, setToState] = useState("");
   const [noResults, setNoResults] = useState(false);
-console.log(fromState)
-console.log(toState)
   // Extract state from place object
   const getStateFromPlace = (place) => {
     if (!place || !place.address_components) return "";
@@ -103,7 +101,6 @@ console.log(toState)
       }
     );
   };
-  console.log(permitCharges);
   if (!isLoaded) return <div>Loading...</div>;
   if (loadError) return <div>Error loading maps</div>;
 

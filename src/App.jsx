@@ -40,7 +40,7 @@ function App() {
     const getData = async () => {
       try {
         const response = await getAllVehicles();
-        console.log(response);
+
         setVehicles(response);
       } catch (error) {
         console.error("Failed to fetch trips:", error);

@@ -86,7 +86,7 @@ const Header = () => {
       <div className="h-16"></div>
 
       <div className="header-container">
-        <div className="fixed top-0 left-0 h-16 w-full z-[9999] shadow-lg">
+        <div className="fixed top-0 left-0 h-16 w-full  shadow-lg">
           {/* Top Navigation Bar */}
           <div className="h-full w-full absolute top-0 bg-[#ff1d58] text-white text-sm sm:text-xs flex justify-between items-center px-4 sm:px-6 md:px-8">
             {/* Logo */}

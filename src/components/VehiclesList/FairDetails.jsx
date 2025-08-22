@@ -10,9 +10,6 @@ const FairDetails = ({
   toInput,
   permitCharges,
 }) => {
-  console.log("from", fromInput);
-  console.log("totalKms", totalKms);
-  console.log("permitCharges", permitCharges);
 
   return (
     <motion.div
