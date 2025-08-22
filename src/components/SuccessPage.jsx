@@ -37,7 +37,7 @@ export default function SuccessPage() {
 
         // Use env variable or fallback to localhost
         const API_BASE_URL =
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+          import.meta.env.VITE_API_BASE_URL || "https://pallaku-backend.onrender.com";
 
         const response = await axios.get(`${API_BASE_URL}/api/booking/${id}`);
         setBookingData(response.data);
