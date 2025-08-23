@@ -36,8 +36,12 @@ export default function SuccessPage() {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         // Use env variable or fallback to localhost
+        // http://localhost:5000
+        // https://pallaku-backend.onrender.com
         const API_BASE_URL =
-          import.meta.env.VITE_API_BASE_URL || "https://pallaku-backend.onrender.com";
+          import.meta.env.VITE_API_BASE_URL ||
+          "https://pallaku-backend.onrender.com";
+       
 
         const response = await axios.get(`${API_BASE_URL}/api/booking/${id}`);
         setBookingData(response.data);
@@ -90,7 +94,10 @@ export default function SuccessPage() {
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden">
         {/* Header */}
         <div className="bg-green-500 text-white p-6 flex flex-col items-center">
-          <a href="/" className="text-white mb-2 text-lg font-semibold hover:underline mt-2">
+          <a
+            href="/"
+            className="text-white mb-2 text-lg font-semibold hover:underline mt-2"
+          >
             ← Back to Home
           </a>
           <CheckCircle2 className="w-16 h-16 mb-3" />

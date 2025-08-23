@@ -7,7 +7,7 @@ const ConformBooking = async (bookingData) => {
       "https://pallaku-backend.onrender.com/conform",
       bookingData
     );
-    // console.log("sending data to backend", response);
+    console.log("sending data to backend", response);
     if (response.status !== 200) {
       throw new Error("Booking confirmation failed");
     }

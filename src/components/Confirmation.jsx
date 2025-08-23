@@ -81,6 +81,8 @@ const BookingConfirmation = () => {
 
     const data = await ConformBooking(bookingData);
     const bookingId = data.data.newBooking._id;
+    console.log("BokkingId", bookingId);
+    console.log("data :", data);
     // setBookingId(data);
 
     if (data?.status === 200) {
@@ -102,7 +104,7 @@ const BookingConfirmation = () => {
 
       // navigate("/successPage", { state: { id: bookingId } });
       navigate(`/successPage/${bookingId}`);
-      window.location.reload();
+      window.location.reload()
     }
   };
 
