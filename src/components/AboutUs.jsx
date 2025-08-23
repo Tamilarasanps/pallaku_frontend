@@ -118,7 +118,7 @@ const AboutUs = () => {
               </button>
 
               <a
-                href="tel:+917695811933"
+                href="tel:+91 7871237890"
                 className="px-8 py-3 border-2 border-[#ff1d58] text-[#ff1d58] font-semibold rounded-lg hover:bg-[#ff1d58] hover:text-white transition-all duration-300 text-center"
               >
                 📞 Call Us
