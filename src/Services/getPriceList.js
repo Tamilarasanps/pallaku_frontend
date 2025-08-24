@@ -14,9 +14,10 @@ const getPriceList = async () => {
     }
     return response.data;
   } catch (error) {
-    console.error("Price list fetch error:", error.message);
+    console.error("Price list fetch error:");
     return null;
   }
 };
 
 export default getPriceList;
+// ok

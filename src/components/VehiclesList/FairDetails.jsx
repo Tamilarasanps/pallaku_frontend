@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 
 const FairDetails = ({
+  tripType,
+  baseKm,
   totalKms,
   baseFair,
   totalPrice,
   tollCharge,
   driverAllowance,
-  fromInput,
-  toInput,
   permitCharges,
 }) => {
-
+  // ok
+  const minKms = tripType === "onewaytrip" ? 130 : 250;
+  const displayKms = totalKms < minKms ? minKms : totalKms;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,6 +30,10 @@ const FairDetails = ({
         <tbody>
           <tr>
             <td className="px-4 py-1">Base km</td>
+            <td className="px-4 py-1">{baseKm?.toFixed(2)} km</td>
+          </tr>
+          <tr>
+            <td className="px-4 py-1">Total km</td>
             <td className="px-4 py-1">{totalKms?.toFixed(2)} km</td>
           </tr>
           <tr>
@@ -37,7 +43,7 @@ const FairDetails = ({
           <tr>
             <td className="px-4 py-1">Total Base Fare</td>
             <td className="px-4 py-1">
-              ₹{totalPrice} ({totalKms} km × ₹{Number(baseFair).toFixed(2)})
+              ₹{totalPrice} ({displayKms} km × ₹{Number(baseFair).toFixed(2)})
             </td>
           </tr>
           <tr>

@@ -17,3 +17,32 @@
 html {
   scroll-behavior: smooth;
 }
+
+
+/* Autocomplete Dropdown Styling */
+.pac-container {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  font-family: 'Inter', sans-serif;
+  z-index: 9999 !important; /* ensure it shows above other elements */
+}
+
+.pac-item {
+  padding: 10px 12px !important;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.pac-item:hover {
+  background-color: #ffeff5 !important;
+  cursor: pointer;
+}
+
+.pac-icon {
+  display: none; /* remove default icons */
+}
+
+.pac-matched {
+  font-weight: 600;
+  color: #ff1d58;
+}

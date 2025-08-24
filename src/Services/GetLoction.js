@@ -17,6 +17,7 @@ export const GetLocation = async (value) => {
 
     setResults(response.data);
   } catch (error) {
-    console.error("Error fetching location:", error);
+    console.error("Error fetching location:");
   }
 };
+// ok

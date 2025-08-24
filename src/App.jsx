@@ -1,4 +1,6 @@
 import { useEffect, useCallback, useRef } from "react";
+import { useJsApiLoader } from "@react-google-maps/api";
+
 import Header from "./components/Header";
 import Banner from "./components/Banner";
 import Location from "./components/Location";
@@ -6,17 +8,18 @@ import VehiclesList from "./components/VehiclesList";
 import Experience from "./components/Experience";
 import Fleets from "./components/Fleets";
 import Footer from "./components/Footer";
-import { useTrip } from "./Contexts/TripType";
-import getPriceList from "./Services/getPriceList";
-import BookingConfirmation from "./components/Confirmation";
-import { ToastContainer, toast, Slide, Zoom } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import RouteMap from "./components/RouteMap";
-import { getAllVehicles } from "./Services/getAllVehicles";
+import BookingConfirmation from "./components/Confirmation";
 import AboutUs from "./components/AboutUs";
 
-import AppRoutes from "./Routes";
-import SuccessPage from "./components/SuccessPage";
+import { useTrip } from "./Contexts/TripType";
+import getPriceList from "./Services/getPriceList";
+import { getAllVehicles } from "./Services/getAllVehicles";
+import Loader from './Loader'
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const mapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 function App() {
   const {
@@ -27,8 +30,14 @@ function App() {
     setAdminPhone,
     setVehicles,
   } = useTrip();
+
   const bookingRef = useRef(null);
   const vehicleRef = useRef(null);
+
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: mapsApiKey,
+    libraries: ["places", "geometry"],
+  });
 
   const fetchPrices = useCallback(async () => {
     const data = await getPriceList();
@@ -40,10 +49,9 @@ function App() {
     const getData = async () => {
       try {
         const response = await getAllVehicles();
-
         setVehicles(response);
       } catch (error) {
-        console.error("Failed to fetch trips:", error);
+        console.error("Failed to fetch trips:");
       }
     };
     getData();
@@ -51,17 +59,19 @@ function App() {
   }, [fetchPrices]);
 
   useEffect(() => {
-    if (conform && bookingRef.current) {
+    if (conform && bookingRef?.current) {
       bookingRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [conform]);
 
   useEffect(() => {
-    if (vehicleList && vehicleRef.current) {
+    if (vehicleList && vehicleRef?.current) {
       vehicleRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [vehicleList]);
 
+  if (loadError) return <div>Something went wrong</div>;
+  if (!isLoaded) return null
   return (
     <div className="h-full w-full">
       <ToastContainer
@@ -86,7 +96,8 @@ function App() {
       <main>
         <div className="relative flex flex-col bg-[#f8f5ef]">
           <Banner />
-          <Location />
+          {/* Pass isLoaded to Location/FromTo */}
+          <Location isMapLoaded={isLoaded} />
 
           {vehicleList && (
             <div ref={vehicleRef}>
@@ -95,7 +106,8 @@ function App() {
           )}
           {conform && (
             <div ref={bookingRef}>
-              <RouteMap />
+              {/* Pass isLoaded to RouteMap */}
+              <RouteMap isMapLoaded={isLoaded} />
               <BookingConfirmation />
             </div>
           )}
@@ -110,3 +122,4 @@ function App() {
 }
 
 export default App;
+// ok

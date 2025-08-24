@@ -36,24 +36,21 @@ export default function SuccessPage() {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         // Use env variable or fallback to localhost
-        // http://localhost:5000
-        // https://pallaku-backend.onrender.com
         const API_BASE_URL =
           import.meta.env.VITE_API_BASE_URL ||
           "https://pallaku-backend.onrender.com";
-       
+        // import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
         const response = await axios.get(`${API_BASE_URL}/api/booking/${id}`);
         setBookingData(response.data);
         setError(null);
       } catch (error) {
-        console.error("Error fetching booking:", error);
         setError("Failed to load booking details. Please try again.");
       } finally {
         setLoading(false);
       }
     };
-
+    // ok
     fetchData();
   }, [id]);
 

@@ -29,15 +29,15 @@ const DateAndTime = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-12 mt-8 py-6">
+    <div className="w-full flex flex-col items-center gap-12 mt-8 py-6 ">
       <h1 className="md:text-xl sm:text-md font-bold text-[#ff1d58]">
-        Tell me boss where should we go
+        Tell me boss when should we go
       </h1>
-
+{/* ok */}
       {(tripType === "onewaytrip" ? ["1"] : ["1", "2"]).map((_, index) => (
         <div
           key={index}
-          className="relative md:w-96 w-[90%] h-14 px-3 border-2 border-gray-300 rounded-lg flex items-center gap-3 bg-white shadow-md"
+          className="relative md:w-96 w-[90%] h-12 px-3 border-2 border-gray-400 rounded-lg flex items-center gap-3 bg-white "
         >
           <span className="absolute -top-3.5 left-3 text-[#ff1d58] bg-white px-1 text-sm font-semibold">
             {index === 0 ? "Departure" : "Arrival"}

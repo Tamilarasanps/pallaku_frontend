@@ -61,9 +61,8 @@ const Header = () => {
     { href: "#booking", label: "Booking" },
     { href: "#tariffs", label: "Tariffs" },
     { href: "#about", label: "About Us" },
-    { href: "#vehicles", label: "Vehicles" },
   ];
-
+// ok
   const handleNavClick = (href, event) => {
     event.preventDefault();
     setMenuOpen(false);
@@ -124,7 +123,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center text-xs">
               <span className="mr-2">📞</span>
               <a
-                href="tel:+91 7871237890"
+                href="tel:+917695811933"
                 className="hover:text-yellow-300 transition-colors duration-200 font-medium"
                 aria-label="Call Pallaku taxi service"
               >
@@ -205,7 +204,7 @@ const Header = () => {
               {/* Mobile Contact */}
               <div className="border-t border-red-400/30 pt-4 mt-2">
                 <a
-                  href="tel:+91 7871237890"
+                  href="tel:+917695811933"
                   className="hover:text-yellow-300 transition-colors duration-200 flex items-center gap-2 font-medium"
                   aria-label="Call Pallaku taxi service"
                 >

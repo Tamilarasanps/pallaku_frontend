@@ -10,7 +10,7 @@ export const getAllVehicles = async () => {
     const response = await axios.get(API_URL);
     return response.data; // { message: "cab booking is available now!" }
   } catch (error) {
-    console.error("Error fetching booking status:", error);
     throw error;
   }
 };
+// ok

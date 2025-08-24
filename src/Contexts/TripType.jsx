@@ -15,11 +15,12 @@ export const TripContextProvider = ({ children }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [startDate, setStartDate] = useState([new Date()]);
   const [encodedPolyline, setEncodedPolyline] = useState(null);
-  const [apiKey, setApiKey] = useState(null);
   const [duration, setDuration] = useState(null);
   const [adminPhone, setAdminPhone] = useState(null);
   const [vehicles, setVehicles] = useState([]);
   const [permitCharges, setPermitCharges] = useState(0);
+  const [minKm, setMinKm] = useState(null);
+  const [driverAllowance, setDriverAllowance] = useState(null);
 
   return (
     <TripContext.Provider
@@ -48,8 +49,8 @@ export const TripContextProvider = ({ children }) => {
         setStartDate,
         encodedPolyline,
         setEncodedPolyline,
-        apiKey,
-        setApiKey,
+        permitCharges,
+        setPermitCharges,
         duration,
         setDuration,
         adminPhone,
@@ -58,11 +59,16 @@ export const TripContextProvider = ({ children }) => {
         setVehicles,
         permitCharges,
         setPermitCharges,
+        minKm,
+        setMinKm,
+        driverAllowance,
+        setDriverAllowance,
       }}
     >
       {children}
     </TripContext.Provider>
   );
 };
-
+// vn
 export const useTrip = () => useContext(TripContext);
+// ok

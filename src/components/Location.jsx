@@ -7,7 +7,7 @@ import TripSwitcher from "./Location/TripSwitcher";
 import { useTrip } from "../Contexts/TripType";
 import { fetchGeocode } from "../Services/geocodeService.js";
 
-const Location = () => {
+const Location = ({isMapLoaded}) => {
   const {
     fromInput,
     toInput,
@@ -24,7 +24,7 @@ const Location = () => {
   } = useTrip();
 
   const [loading, setLoading] = useState(false); // 🌀 Loading state
-
+// ok
   const handleSearch = useCallback(
     async (fromInput, toInput) => {
       if (!fromInput || !toInput) {
@@ -51,21 +51,20 @@ const Location = () => {
         }
 
         const distance = Number(data.distanceMeters) || "-";
-        // console.log("triptype inside search:", tripType);
-        // console.log("distance :", distance);
-        // console.log("toll :", data?.tolls[0]);
 
         setTotalKms(() =>
           tripType === "onewaytrip" ? distance : distance * 2
         );
 
         setVehicleList(true);
+        setTollCharge(() => {
+          const toll = data?.tolls?.[0]?.units;
 
-        setTollCharge(() =>
-          tripType === "onewaytrip"
-            ? Number(data?.tolls[0]?.units) / 2
-            : Number(data?.tolls[0]?.units) || "applicable"
-        );
+          if (toll === "" || toll == null) return "-"; // if empty or undefined
+          return tripType === "onewaytrip"
+            ? Number(toll) / 2
+            : Number(toll) || "applicable";
+        });
 
         setEncodedPolyline(data?.polyline);
         setDuration(data?.duration);
@@ -102,6 +101,7 @@ const Location = () => {
           setToInput={setToInput}
           permitCharges={permitCharges}
           setPermitCharges={setPermitCharges}
+          isMapLoaded={isMapLoaded}
         />
         <DateAndTime />
       </div>
@@ -146,4 +146,3 @@ const Location = () => {
 };
 
 export default Location;
-  
