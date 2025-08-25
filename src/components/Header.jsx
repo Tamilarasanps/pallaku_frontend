@@ -89,16 +89,18 @@ const Header = () => {
           {/* Top Navigation Bar */}
           <div className="h-full w-full absolute top-0 bg-[#ff1d58] text-white text-sm sm:text-xs flex justify-between items-center px-4 sm:px-6 md:px-8">
             {/* Logo */}
-            <div className="h-full w-28 sm:w-24 flex-shrink-0">
-              <img
-                src={logo}
-                className="h-full w-full object-contain"
-                alt="Pallaku - Travel & Taxi Service Logo"
-              />
+            <div className="h-full flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
+              <div className="h-full w-28 sm:w-24">
+                <img
+                  src={logo}
+                  className="h-full w-full object-contain"
+                  alt="Pallaku - Travel & Taxi Service Logo"
+                />
+              </div>
+              <h4 className="font-bold text-sm md:text-base whitespace-nowrap">
+                Your Journey, Our Care
+              </h4>
             </div>
-            <h4 className="font-bold md:text-lg md:mr-[800px]">
-              Your Journey, Our Care
-            </h4>
 
             {/* Desktop Nav Links */}
 
