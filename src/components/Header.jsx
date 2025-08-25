@@ -62,7 +62,7 @@ const Header = () => {
     { href: "#tariffs", label: "Tariffs" },
     { href: "#about", label: "About Us" },
   ];
-// ok
+  // ok
   const handleNavClick = (href, event) => {
     event.preventDefault();
     setMenuOpen(false);
@@ -96,39 +96,42 @@ const Header = () => {
                 alt="Pallaku - Travel & Taxi Service Logo"
               />
             </div>
+            <h4 className="font-bold md:text-lg md:mr-[800px]">
+              Your Journey, Our Care
+            </h4>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden md:flex gap-6 flex-1 justify-center text-sm md:text-base lg:text-lg">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(item.href, e)}
-                  className={`hover:text-yellow-300 transition-colors duration-200 relative py-2 px-3 rounded ${
-                    activeSection === item.href.substring(1)
-                      ? "text-yellow-300 font-semibold"
-                      : "hover:underline"
-                  }`}
-                  aria-label={`Navigate to ${item.label} section`}
-                >
-                  {item.label}
-                  {activeSection === item.href.substring(1) && (
-                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-300 rounded-full"></span>
-                  )}
-                </a>
-              ))}
-            </nav>
 
             {/* Contact Info for Desktop */}
             <div className="hidden lg:flex items-center text-xs">
-              <span className="mr-2">📞</span>
+              <nav className="hidden md:flex gap-6 flex-1 justify-center text-sm md:text-base lg:text-lg">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(item.href, e)}
+                    className={`hover:text-yellow-300 transition-colors duration-200 relative py-2 px-3 rounded ${
+                      activeSection === item.href.substring(1)
+                        ? "text-yellow-300 font-semibold"
+                        : "hover:underline"
+                    }`}
+                    aria-label={`Navigate to ${item.label} section`}
+                  >
+                    {item.label}
+                    {activeSection === item.href.substring(1) && (
+                      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-300 rounded-full"></span>
+                    )}
+                  </a>
+                ))}
+              </nav>
+              {/* <span className="mr-2">📞</span>
               <a
                 href="tel:+917695811933"
                 className="hover:text-yellow-300 transition-colors duration-200 font-medium"
                 aria-label="Call Pallaku taxi service"
               >
                 +91 78712 37890
-              </a>
+              </a> */}
             </div>
 
             {/* Hamburger for Mobile */}
@@ -177,9 +180,10 @@ const Header = () => {
               className="absolute top-16 w-full 
                   bg-gradient-to-b from-[#ff1d58] via-[#ff1d58]/95 to-[#ff1d58]/85
                   backdrop-blur-md text-white flex flex-col items-center py-6 md:hidden z-50 space-y-4 text-base
-                  border-t border-red-400/30 shadow-xl"
+                  border-t border-red-400/30 shadow-xl z-[9999]"
               role="menu"
               aria-label="Mobile navigation menu"
+              style={{ zIndex: 9999 }}
             >
               {navItems.map((item, index) => (
                 <a
@@ -200,18 +204,6 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
-
-              {/* Mobile Contact */}
-              <div className="border-t border-red-400/30 pt-4 mt-2">
-                <a
-                  href="tel:+917695811933"
-                  className="hover:text-yellow-300 transition-colors duration-200 flex items-center gap-2 font-medium"
-                  aria-label="Call Pallaku taxi service"
-                >
-                  <span>📞</span>
-                  +91 78712 37890
-                </a>
-              </div>
             </div>
           )}
         </div>

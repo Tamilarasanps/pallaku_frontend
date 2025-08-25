@@ -15,7 +15,7 @@ import AboutUs from "./components/AboutUs";
 import { useTrip } from "./Contexts/TripType";
 import getPriceList from "./Services/getPriceList";
 import { getAllVehicles } from "./Services/getAllVehicles";
-import Loader from './Loader'
+import Loader from "./Loader";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -71,7 +71,7 @@ function App() {
   }, [vehicleList]);
 
   if (loadError) return <div>Something went wrong</div>;
-  if (!isLoaded) return null
+  if (!isLoaded) return null;
   return (
     <div className="h-full w-full">
       <ToastContainer
@@ -94,9 +94,9 @@ function App() {
 
       <Header adminPhone={adminPhone} />
       <main>
-        <div className="relative flex flex-col bg-[#f8f5ef]">
+        <div className="relative flex flex-col bg-[#f8f5ef] " style={{zIndex:-2}}>
           <Banner />
-          {/* Pass isLoaded to Location/FromTo */}
+
           <Location isMapLoaded={isLoaded} />
 
           {vehicleList && (
@@ -106,7 +106,6 @@ function App() {
           )}
           {conform && (
             <div ref={bookingRef}>
-              {/* Pass isLoaded to RouteMap */}
               <RouteMap isMapLoaded={isLoaded} />
               <BookingConfirmation />
             </div>

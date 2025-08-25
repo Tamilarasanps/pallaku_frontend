@@ -2,9 +2,12 @@ import { motion } from "framer-motion";
 import car from "../assets/travels.jpg";
 import banner from "../assets/car.jpg";
 
-const Banner = ({adminMobile}) => {
+const Banner = ({ adminMobile }) => {
   return (
-    <div className="relative w-full aspect-[21/9] max-h-[600px]  mx-auto overflow-hidden">
+    <div
+      className="relative w-full aspect-[21/9] max-h-[600px]  mx-auto overflow-hidden"
+      // style={{ zIndex: -1 }}
+    >
       <motion.img
         src={banner}
         alt="Banner"

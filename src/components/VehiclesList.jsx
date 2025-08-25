@@ -23,13 +23,17 @@ const VehiclesList = () => {
     setDriverAllowance,
   } = useTrip();
 
-  const handleToggle = (index) => setOpenIndex(openIndex === index ? null : index);
+  const handleToggle = (index) =>
+    setOpenIndex(openIndex === index ? null : index);
 
   const getDriverAllowanceDisplay = (car) => {
     if (tripType === "roundtrip" && startDate.length >= 2) {
       const days = Math.max(
         1,
-        Math.ceil((new Date(startDate[1]) - new Date(startDate[0])) / (1000 * 60 * 60 * 24))
+        Math.ceil(
+          (new Date(startDate[1]) - new Date(startDate[0])) /
+            (1000 * 60 * 60 * 24)
+        )
       );
       const totalAllowance = car.driverAllowance * days;
       return `₹ ${totalAllowance} (${car.driverAllowance} × ${days} days)`;
@@ -39,13 +43,28 @@ const VehiclesList = () => {
 
   return (
     <div className="mt-8 flex flex-col items-center px-4 py-2">
-      <h1 className="font-bold lg:text-2xl text-md text-[#ff1d58] text-center">Vehicles List</h1>
-      <p className="text-[#4a1e2d] mt-4 text-center text-sm md:text-base">Select a perfect vehicle for your comfort journey</p>
+      <h1 className="font-bold lg:text-2xl text-md text-[#ff1d58] text-center">
+        Vehicles List
+      </h1>
+      <p className="text-[#4a1e2d] mt-4 text-center text-sm md:text-base">
+        Select a perfect vehicle for your comfort journey
+      </p>
 
       {vehicles.map((car, index) => {
-        const effectiveKms = tripType === "onewaytrip" ? Math.max(totalKms, 130) : Math.max(totalKms, 250);
-        const price = tripType === "onewaytrip" ? car.oneWayPrice * effectiveKms : car.roundTripPrice * effectiveKms || "-";
+        const effectiveKms =
+          tripType === "onewaytrip"
+            ? Math.max(totalKms, 130)
+            : Math.max(totalKms, 250);
+        const price =
+          tripType === "onewaytrip"
+            ? car.oneWayPrice * effectiveKms
+            : car.roundTripPrice * effectiveKms || "-";
         const driverAllowanceDisplay = getDriverAllowanceDisplay(car);
+        const driverAmount = Number(
+          driverAllowanceDisplay.replace(/[^0-9.]/g, "")
+        );
+        const finalPrice = price + tollCharge + driverAmount;
+        // console.log("finalPrice", finalPrice);
 
         return (
           <motion.div
@@ -58,14 +77,23 @@ const VehiclesList = () => {
             <div className="lg:w-[90%] w-full mt-4 flex flex-col lg:flex-row items-start lg:items-center px-4 py-6 bg-white gap-4 lg:gap-8 shadow rounded-md border border-[#ffc0d1]">
               {/* Image */}
               <div className="max-w-max lg:w-1/4 h-40 bg-[#fff0f5] mx-auto rounded-md overflow-hidden">
-                <img src={`https://pallaku-backend.onrender.com/image/${car.img}`} alt={car.type} className="max-h-full" />
+                <img
+                  src={`https://pallaku-backend.onrender.com/image/${car.img}`}
+                  alt={car.type}
+                  className="max-h-full"
+                />
               </div>
 
               {/* Car Info */}
               <div className="w-full lg:w-2/4 flex flex-col justify-between">
-                <h1 className="font-bold text-xl md:text-2xl text-[#ff1d58]">{car.type}</h1>
+                <h1 className="font-bold text-xl md:text-2xl text-[#ff1d58]">
+                  {car.type}
+                </h1>
                 <p className="text-[#4a1e2d] mt-2">{car.options.join(" / ")}</p>
-                <div onClick={() => handleToggle(index)} className="cursor-pointer h-12 w-48 border-2 border-[#ffc0d1] mt-4 flex items-center justify-around px-6 rounded-md text-[#ff1d58]">
+                <div
+                  onClick={() => handleToggle(index)}
+                  className="cursor-pointer h-12 w-48 border-2 border-[#ffc0d1] mt-4 flex items-center justify-around px-6 rounded-md text-[#ff1d58]"
+                >
                   <p>More Details</p>
                   <SlArrowDown />
                 </div>
@@ -89,13 +117,25 @@ const VehiclesList = () => {
 
               {/* Price & Select */}
               <div className="w-full lg:w-1/6 flex flex-col h-36 items-end lg:items-end justify-around mt-4 lg:mt-0">
-                <h1 className="text-xl font-bold text-[#4a1e2d]">₹ {price}</h1>
-                <p className="text-sm mt-1 text-[#ff1d58]">Driver Allowance: {driverAllowanceDisplay}</p>
+                <h1 className="text-xl font-bold text-[#4a1e2d]">
+                  Total Amount : ₹ {finalPrice}
+                </h1>
+                {/* <p className="text-sm mt-1 text-[#ff1d58]">
+                  Driver Allowance: {driverAllowanceDisplay}
+                </p> */}
                 <button
                   onClick={() => {
                     setSelectedVehicle(car);
-                    setBaseFair(() => tripType === "onewaytrip" ? car.oneWayPrice : car.roundTripPrice);
-                    setMinKm(() => tripType === "onewaytrip" ? car.oneWayTripMinKm : car.roundTripMinKm);
+                    setBaseFair(() =>
+                      tripType === "onewaytrip"
+                        ? car.oneWayPrice
+                        : car.roundTripPrice
+                    );
+                    setMinKm(() =>
+                      tripType === "onewaytrip"
+                        ? car.oneWayTripMinKm
+                        : car.roundTripMinKm
+                    );
                     setDriverAllowance(driverAllowanceDisplay);
                     setconform(true);
                   }}
@@ -120,11 +160,19 @@ const VehiclesList = () => {
                     <h1 className="text-white font-semibold">Fair Details</h1>
                   </div>
                   <FairDetails
-                    baseKm={tripType === "onewaytrip" ? car?.oneWayTripMinKm : car?.roundTripMinKm}
+                    baseKm={
+                      tripType === "onewaytrip"
+                        ? car?.oneWayTripMinKm
+                        : car?.roundTripMinKm
+                    }
                     tripType={tripType}
                     totalKms={totalKms}
                     permitCharges={permitCharges > 0 ? permitCharges : "-"}
-                    baseFair={tripType === "onewaytrip" ? car.oneWayPrice : car.roundTripPrice}
+                    baseFair={
+                      tripType === "onewaytrip"
+                        ? car.oneWayPrice
+                        : car.roundTripPrice
+                    }
                     totalPrice={price}
                     tollCharge={tollCharge}
                     driverAllowance={driverAllowanceDisplay}

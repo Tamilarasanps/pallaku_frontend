@@ -13,6 +13,10 @@ const FairDetails = ({
   // ok
   const minKms = tripType === "onewaytrip" ? 130 : 250;
   const displayKms = totalKms < minKms ? minKms : totalKms;
+  const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));
+  // console.log("rawPermitCharge", rawPermitCharge);
+  const finalPrice = totalPrice + tollCharge + rawPermitCharge;
+  // console.log("finalPrice :", finalPrice);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -60,7 +64,7 @@ const FairDetails = ({
           </tr>
           <tr className="font-bold text-black">
             <td className="px-4 py-2">Total</td>
-            <td className="px-4 py-2">₹ {totalPrice}</td>
+            <td className="px-4 py-2">₹ {finalPrice}</td>
           </tr>
         </tbody>
       </table>
