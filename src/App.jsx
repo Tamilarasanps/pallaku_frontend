@@ -94,27 +94,30 @@ function App() {
 
       <Header adminPhone={adminPhone} />
       <main>
-        <div className="relative flex flex-col bg-[#f8f5ef] " style={{zIndex:-2}}>
+        <div
+          className="relative flex flex-col bg-[#f8f5ef] "
+          style={{ zIndex: -1 }}
+        >
           <Banner />
-
-          <Location isMapLoaded={isLoaded} />
-
-          {vehicleList && (
-            <div ref={vehicleRef}>
-              <VehiclesList />
-            </div>
-          )}
-          {conform && (
-            <div ref={bookingRef}>
-              <RouteMap isMapLoaded={isLoaded} />
-              <BookingConfirmation />
-            </div>
-          )}
-          <Experience />
-          <AboutUs />
-          <Fleets />
         </div>
       </main>
+
+      <Location isMapLoaded={isLoaded} />
+
+      {vehicleList && (
+        <div ref={vehicleRef}>
+          <VehiclesList />
+        </div>
+      )}
+      {conform && (
+        <div ref={bookingRef}>
+          <RouteMap isMapLoaded={isLoaded} />
+          <BookingConfirmation />
+        </div>
+      )}
+      <Experience />
+      <AboutUs />
+      <Fleets />
       <Footer />
     </div>
   );

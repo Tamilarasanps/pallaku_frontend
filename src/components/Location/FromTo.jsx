@@ -96,7 +96,7 @@ export default function FromTo({
       </h1>
 {/* ok */}
       {/* From Input */}
-      <div className="relative md:w-96 w-[90%]">
+      <div className="relative md:w-96 w-[90%]" >
         <label className="absolute -top-3 left-2 bg-white px-1 text-sm font-semibold text-[#ff1d58]">
           From
         </label>

@@ -21,6 +21,7 @@ const Banner = ({ adminMobile }) => {
         className="absolute inset-y-0 left-0 lg:w-fit w-[70%] space-y-3 
                 bg-gradient-to-r from-black/70 via-black/40 to-transparent 
                 "
+                
       >
         <motion.div
           className="h-full flex items-center px-4 sm:px-8 md:px-16"
