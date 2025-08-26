@@ -7,7 +7,7 @@ const TripSwitcher = () => {
     useTrip();
 
   return (
-    <div className="h-12 w-full flex gap-4 items-center px-4 relative">
+    <div className="h-12 w-full flex gap-4 items-center px-4 ">
       <div className="flex flex-col items-start">
         <div
           className="flex items-center gap-2 cursor-pointer"

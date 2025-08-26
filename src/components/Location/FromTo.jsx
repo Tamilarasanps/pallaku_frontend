@@ -90,7 +90,7 @@ export default function FromTo({
   if (!isMapLoaded) return <div>Loading map...</div>;
 
   return (
-    <div className="w-full flex flex-col items-center gap-12 mt-8 py-6 ">
+    <div className="w-full flex flex-col items-center gap-12 mt-8 py-6 " >
       <h1 className="lg:text-xl sm:text-md font-bold text-[#ff1d58]">
         Tell me boss where should we go
       </h1>

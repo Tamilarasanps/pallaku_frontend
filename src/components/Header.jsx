@@ -22,7 +22,7 @@ const Header = () => {
   // Handle smooth scrolling and active section tracking
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["booking", "tarrifs", "about", "vehicles"];
+      const sections = ["booking", "tariffs", "about"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -82,9 +82,9 @@ const Header = () => {
   return (
     <>
       {/* Spacer div to prevent content from hiding behind fixed header */}
-      <div className="h-16"></div>
+      <div className="h-16 " style={{ zIndex: 999 }}></div>
 
-      <div className="header-container">
+      <div className="header-container fixed top-0 left-0 h-16 w-full z-50">
         <div className="fixed top-0 left-0 h-16 w-full  shadow-lg">
           {/* Top Navigation Bar */}
           <div className="h-full w-full absolute top-0 bg-[#ff1d58] text-white text-sm sm:text-xs flex justify-between items-center px-4 sm:px-6 md:px-8">
@@ -126,14 +126,6 @@ const Header = () => {
                   </a>
                 ))}
               </nav>
-              {/* <span className="mr-2">📞</span>
-              <a
-                href="tel:+917695811933"
-                className="hover:text-yellow-300 transition-colors duration-200 font-medium"
-                aria-label="Call Pallaku taxi service"
-              >
-                +91 78712 37890
-              </a> */}
             </div>
 
             {/* Hamburger for Mobile */}

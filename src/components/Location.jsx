@@ -7,7 +7,7 @@ import TripSwitcher from "./Location/TripSwitcher";
 import { useTrip } from "../Contexts/TripType";
 import { fetchGeocode } from "../Services/geocodeService.js";
 
-const Location = ({isMapLoaded}) => {
+const Location = ({ isMapLoaded }) => {
   const {
     fromInput,
     toInput,
@@ -24,7 +24,7 @@ const Location = ({isMapLoaded}) => {
   } = useTrip();
 
   const [loading, setLoading] = useState(false); // 🌀 Loading state
-// ok
+  // ok
   const handleSearch = useCallback(
     async (fromInput, toInput) => {
       if (!fromInput || !toInput) {
@@ -90,7 +90,7 @@ const Location = ({isMapLoaded}) => {
   return (
     <section
       id="booking"
-      className="min-h-max w-[90%] bg-[#ffffff] z-50 lg:-mt-12 -mt-2 rounded-md shadow-md mx-auto flex flex-col justify-center items-center pb-12"
+      className="min-h-max w-[90%] bg-[#ffffff] z-10 lg:-mt-12 -mt-2 rounded-md shadow-md mx-auto flex flex-col justify-center items-center pb-12"
     >
       <TripSwitcher />
       <div className="flex flex-col lg:flex-row lg:w-full">
