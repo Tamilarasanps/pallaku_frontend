@@ -173,7 +173,9 @@ const BookingConfirmation = () => {
     },
     {
       label: "Total",
-      value: formatCurrency(getTotalFare() + tollCharge + driverAmount),
+      value: formatCurrency(
+        Math.trunc(getTotalFare() + tollCharge + driverAmount)
+      ),
     },
   ];
 
