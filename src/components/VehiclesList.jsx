@@ -65,8 +65,8 @@ const VehiclesList = () => {
         );
         const finalPrice = price + tollCharge + driverAmount;
         let roundPrice = Math.trunc(finalPrice);
-        console.log("finalPrice", finalPrice);
-        console.log("roundPrice", roundPrice);
+        // console.log("finalPrice", finalPrice);
+        // console.log("roundPrice", roundPrice);
 
         return (
           <motion.div

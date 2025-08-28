@@ -77,7 +77,7 @@ const BookingConfirmation = () => {
         : 1;
     return driverAllowance * days;
   };
-  console.log("getDriverAllowance", driverAllowance);
+  // console.log("getDriverAllowance", driverAllowance);
 
   // For UI display only
   const formatCurrency = (num) => `₹ ${num}`;
@@ -100,8 +100,8 @@ const BookingConfirmation = () => {
       departureDate: startDate[0],
       arrivalDate: startDate[1] || "-",
     };
-    console.log("hh");
-    console.log("permitCharges", permitCharges);
+    // console.log("hh");
+    // console.log("permitCharges", permitCharges);
 
     try {
       const data = await ConformBooking(bookingData);
