@@ -119,7 +119,7 @@ const VehiclesList = () => {
 
               {/* Price & Select */}
               <div className="w-full lg:w-1/6 flex flex-col h-36 items-end lg:items-end justify-around mt-4 lg:mt-0">
-                <h1 className="text-xl font-bold text-[#4a1e2d]">
+                <h1 className="text-lg font-bold text-[#4a1e2d]">
                   Total Amount : ₹ {roundPrice}
                 </h1>
                 {/* <p className="text-sm mt-1 text-[#ff1d58]">
