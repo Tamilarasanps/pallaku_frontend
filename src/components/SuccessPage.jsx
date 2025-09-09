@@ -37,9 +37,10 @@ export default function SuccessPage() {
 
         // Use env variable or fallback to localhost
         const API_BASE_URL =
-          import.meta.env.VITE_API_BASE_URL ||
+          // import.meta.env.VITE_API_BASE_URL ||
           "https://pallaku-backend.onrender.com";
-        // import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+          // import.meta.env.VITE_API_BASE_URL ||
+          // "http://localhost:5000";
 
         const response = await axios.get(`${API_BASE_URL}/api/booking/${id}`);
         setBookingData(response.data);
@@ -84,6 +85,7 @@ export default function SuccessPage() {
       </div>
     );
   }
+  console.log("bookingData : ", bookingData);
 
   // Main success page
   return (
@@ -135,7 +137,7 @@ export default function SuccessPage() {
             />
             <InfoRow
               label="Total Base Fare"
-              value={formatCurrency(bookingData?.totalBaseFare)}
+              value={formatCurrency(bookingData?.totalFare)}
             />
             <InfoRow
               label="Driver Allowance"
@@ -147,7 +149,7 @@ export default function SuccessPage() {
             />
             <InfoRow
               label="Toll Charges (Approx)"
-              value={formatCurrency(bookingData?.tollCharges)}
+              value={formatCurrency(bookingData?.tollCharge)}
             />
           </div>
 

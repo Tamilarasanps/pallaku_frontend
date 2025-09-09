@@ -100,11 +100,11 @@ const BookingConfirmation = () => {
       departureDate: startDate[0],
       arrivalDate: startDate[1] || "-",
     };
-    // console.log("hh");
-    // console.log("permitCharges", permitCharges);
+
 
     try {
       const data = await ConformBooking(bookingData);
+  
       const bookingId = data?.data?.newBooking._id;
 
       if (data?.status === 200) {
