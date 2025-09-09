@@ -17,6 +17,7 @@ const FairDetails = ({
   // console.log("rawPermitCharge", rawPermitCharge);
   const finalPrice = totalPrice + tollCharge + rawPermitCharge;
   // console.log("finalPrice :", finalPrice);
+  console.log(typeof(totalKms))
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -38,7 +39,7 @@ const FairDetails = ({
           </tr>
           <tr>
             <td className="px-4 py-1">Total km</td>
-            <td className="px-4 py-1">{totalKms?.toFixed(2)} km</td>
+            <td className="px-4 py-1">{totalKms} km</td>
           </tr>
           <tr>
             <td className="px-4 py-1">Base Fare Per Km</td>

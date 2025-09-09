@@ -21,11 +21,29 @@ const VehiclesList = () => {
     permitCharges,
     setMinKm,
     setDriverAllowance,
+    driverAllowance
   } = useTrip();
 
   const handleToggle = (index) =>
     setOpenIndex(openIndex === index ? null : index);
 
+  // 👉 Returns numeric allowance
+  const getDriverAllowanceValue = (car) => {
+    if (tripType === "roundtrip" && startDate.length >= 2) {
+      const days = Math.max(
+        1,
+        Math.ceil(
+          (new Date(startDate[1]) - new Date(startDate[0])) /
+            (1000 * 60 * 60 * 24)
+        )
+      );
+
+      return car.driverAllowance * days; // number
+    }
+    return car.driverAllowance; // number
+  };
+
+  // 👉 Returns display string for UI
   const getDriverAllowanceDisplay = (car) => {
     if (tripType === "roundtrip" && startDate.length >= 2) {
       const days = Math.max(
@@ -35,8 +53,7 @@ const VehiclesList = () => {
             (1000 * 60 * 60 * 24)
         )
       );
-      const totalAllowance = car.driverAllowance * days;
-      return `₹ ${totalAllowance} (${car.driverAllowance} × ${days} days)`;
+      return `₹ ${car.driverAllowance * days} (${car.driverAllowance} × ${days} days)`;
     }
     return `₹ ${car.driverAllowance}`;
   };
@@ -55,18 +72,17 @@ const VehiclesList = () => {
           tripType === "onewaytrip"
             ? Math.max(totalKms, 130)
             : Math.max(totalKms, 250);
+
         const price =
           tripType === "onewaytrip"
             ? car.oneWayPrice * effectiveKms
             : car.roundTripPrice * effectiveKms || "-";
-        const driverAllowanceDisplay = getDriverAllowanceDisplay(car);
-        const driverAmount = Number(
-          driverAllowanceDisplay.replace(/[^0-9.]/g, "")
-        );
-        const finalPrice = price + tollCharge + driverAmount;
+
+        const driverAllowanceValue = getDriverAllowanceValue(car); // number
+        const driverAllowanceDisplay = getDriverAllowanceDisplay(car); // string
+
+        const finalPrice = price + tollCharge + driverAllowanceValue;
         let roundPrice = Math.trunc(finalPrice);
-        // console.log("finalPrice", finalPrice);
-        // console.log("roundPrice", roundPrice);
 
         return (
           <motion.div
@@ -122,9 +138,9 @@ const VehiclesList = () => {
                 <h1 className="text-lg font-bold text-[#4a1e2d]">
                   Total Amount : ₹ {roundPrice}
                 </h1>
-                {/* <p className="text-sm mt-1 text-[#ff1d58]">
+                <p className="text-sm mt-1 text-[#ff1d58]">
                   Driver Allowance: {driverAllowanceDisplay}
-                </p> */}
+                </p>
                 <button
                   onClick={() => {
                     setSelectedVehicle(car);
@@ -138,8 +154,10 @@ const VehiclesList = () => {
                         ? car.oneWayTripMinKm
                         : car.roundTripMinKm
                     );
-                    setDriverAllowance(driverAllowanceDisplay);
+                    setDriverAllowance(driverAllowanceValue); // 👈 now a number
                     setconform(true);
+
+                    // ⚠️ also make sure pickupTime is set somewhere in context before confirm
                   }}
                   className="mt-2 bg-[#ff1d58] text-white py-2 px-6 rounded-md w-full lg:w-[186px] hover:bg-[#e0144d] transition-all"
                 >
@@ -190,4 +208,3 @@ const VehiclesList = () => {
 };
 
 export default VehiclesList;
-// ok

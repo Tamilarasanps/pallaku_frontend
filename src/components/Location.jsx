@@ -53,7 +53,7 @@ const Location = ({ isMapLoaded }) => {
         const distance = Number(data.distanceMeters) || "-";
 
         setTotalKms(() =>
-          tripType === "onewaytrip" ? distance : distance * 2
+          tripType === "onewaytrip" ? distance.toFixed(2) : (distance * 2).toFixed(2)
         );
 
         setVehicleList(true);

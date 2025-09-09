@@ -64,19 +64,19 @@ const BookingConfirmation = () => {
   };
 
   // Returns numeric driver allowance
-  const getDriverAllowance = () => {
-    const days =
-      tripType === "roundtrip" && startDate.length >= 2
-        ? Math.max(
-            1,
-            Math.ceil(
-              (new Date(startDate[1]) - new Date(startDate[0])) /
-                (1000 * 3600 * 24)
-            )
-          )
-        : 1;
-    return driverAllowance * days;
-  };
+  // const getDriverAllowance = () => {
+  //   const days =
+  //     tripType === "roundtrip" && startDate.length >= 2
+  //       ? Math.max(
+  //           1,
+  //           Math.ceil(
+  //             (new Date(startDate[1]) - new Date(startDate[0])) /
+  //               (1000 * 3600 * 24)
+  //           )
+  //         )
+  //       : 1;
+  //   return driverAllowance * days;
+  // };
   // console.log("getDriverAllowance", driverAllowance);
 
   // For UI display only
@@ -150,10 +150,10 @@ const BookingConfirmation = () => {
       setLoading(false);
     }
   };
-  const driverAmount = Number(driverAllowance.replace(/[^0-9.]/g, ""));
+  const driverAmount = Number(driverAllowance) || 0;
   const details = [
     { label: "Base km", value: minKm },
-    { label: "Total km", value: totalKms },
+    { label: "Total km", value: totalKms},
     { label: "Base Fare Per Km", value: formatCurrency(baseFair) },
     { label: "Total Base Fare", value: formatCurrency(getTotalFare()) },
     {
