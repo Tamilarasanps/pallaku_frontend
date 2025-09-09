@@ -33,10 +33,6 @@ const Experience = () => {
     },
   ];
 
-  // const navigate = useNavigate();
-  // const navi = () => {
-  //   navigate("/successPage");
-  // };
   return (
     <div className="mt-16 flex flex-col items-center px-4 py-12 ">
       {/* Header */}

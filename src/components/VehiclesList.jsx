@@ -21,7 +21,8 @@ const VehiclesList = () => {
     permitCharges,
     setMinKm,
     setDriverAllowance,
-    driverAllowance
+    driverAllowance,
+    baseFair
   } = useTrip();
 
   const handleToggle = (index) =>
@@ -57,6 +58,7 @@ const VehiclesList = () => {
     }
     return `₹ ${car.driverAllowance}`;
   };
+console.log('vehclist : ', baseFair)
 
   return (
     <div className="mt-8 flex flex-col items-center px-4 py-2">
