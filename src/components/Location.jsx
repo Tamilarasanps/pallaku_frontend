@@ -59,11 +59,11 @@ const Location = ({ isMapLoaded }) => {
         setVehicleList(true);
         setTollCharge(() => {
           const toll = data?.tolls?.[0]?.units;
-
-          if (toll === "" || toll == null) return "-"; // if empty or undefined
+          console.log('toll :', toll)
+          if (toll === "" || toll == null) return 0; // if empty or undefined
           return tripType === "onewaytrip"
             ? Number(toll) / 2
-            : Number(toll) || "applicable";
+            : Number(toll) || 0;
         });
 
         setEncodedPolyline(data?.polyline);

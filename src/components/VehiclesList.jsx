@@ -58,7 +58,6 @@ const VehiclesList = () => {
     }
     return `₹ ${car.driverAllowance}`;
   };
-console.log('vehclist : ', baseFair)
 
   return (
     <div className="mt-8 flex flex-col items-center px-4 py-2">
@@ -78,7 +77,7 @@ console.log('vehclist : ', baseFair)
         const price =
           tripType === "onewaytrip"
             ? car.oneWayPrice * effectiveKms
-            : car.roundTripPrice * effectiveKms || "-";
+            : car.roundTripPrice * effectiveKms || 0 ;
 
         const driverAllowanceValue = getDriverAllowanceValue(car); // number
         const driverAllowanceDisplay = getDriverAllowanceDisplay(car); // string

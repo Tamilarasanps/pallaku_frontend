@@ -10,11 +10,13 @@ const FairDetails = ({
   driverAllowance,
   permitCharges,
 }) => {
-
+console.log('totalPrice :', totalPrice)
+console.log('tollCharge :', tollCharge)
   // ok
   const minKms = tripType === "onewaytrip" ? 130 : 250;
   const displayKms = totalKms < minKms ? minKms : totalKms;
   const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));
+console.log('rawPermitCharge :', rawPermitCharge)
 
   const finalPrice = totalPrice + tollCharge + rawPermitCharge;
 

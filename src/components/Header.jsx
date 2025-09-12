@@ -80,128 +80,73 @@ const Header = () => {
   };
 
   return (
-    <>
-      {/* Spacer div to prevent content from hiding behind fixed header */}
-      <div className="h-16 " style={{ zIndex: 999 }}></div>
-
-      <div className="header-container fixed top-0 left-0 h-16 w-full z-50">
-        <div className="fixed top-0 left-0 h-16 w-full  shadow-lg">
-          {/* Top Navigation Bar */}
-          <div className="h-full w-full absolute top-0 bg-[#ff1d58] text-white text-sm sm:text-xs flex justify-between items-center px-4 sm:px-6 md:px-8">
-            {/* Logo */}
-            <div className="h-full flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
-              <div className="h-full w-28 sm:w-24">
-                <img
-                  src={logo}
-                  className="h-full w-full object-contain"
-                  alt="Pallaku - Travel & Taxi Service Logo"
-                />
-              </div>
-              <h4 className="font-bold text-sm md:text-base whitespace-nowrap">
-                Your Journey, Our Care
-              </h4>
-            </div>
-
-            {/* Desktop Nav Links */}
-
-            {/* Contact Info for Desktop */}
-            <div className="hidden lg:flex items-center text-xs">
-              <nav className="hidden md:flex gap-6 flex-1 justify-center text-sm md:text-base lg:text-lg">
-                {navItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(item.href, e)}
-                    className={`hover:text-yellow-300 transition-colors duration-200 relative py-2 px-3 rounded ${
-                      activeSection === item.href.substring(1)
-                        ? "text-yellow-300 font-semibold"
-                        : "hover:underline"
-                    }`}
-                    aria-label={`Navigate to ${item.label} section`}
-                  >
-                    {item.label}
-                    {activeSection === item.href.substring(1) && (
-                      <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-300 rounded-full"></span>
-                    )}
-                  </a>
-                ))}
-              </nav>
-            </div>
-
-            {/* Hamburger for Mobile */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="focus:outline-none p-2 hover:bg-red-600 rounded transition-colors duration-200"
-                aria-label={
-                  menuOpen ? "Close navigation menu" : "Open navigation menu"
-                }
-                aria-expanded={menuOpen}
-              >
-                <svg
-                  className="w-6 h-6 transition-transform duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style={{
-                    transform: menuOpen ? "rotate(90deg)" : "rotate(0deg)",
-                  }}
-                >
-                  {menuOpen ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
-              </button>
-            </div>
+    <div className="w-full h-16 bg-red-200 header-container fixed top-0 left-0 w-full z-50">
+      <div className="h-16 w-full shadow-lg bg-[#ff1d58] text-white flex items-center justify-between px-4 sm:px-6 md:px-8">
+        {/* Logo + Tagline */}
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
+          <div className="h-12 w-24 sm:w-20">
+            <img
+              src={logo}
+              className="h-full w-full object-contain"
+              alt="Pallaku Logo"
+            />
           </div>
+          <h4 className="font-bold text-sm md:text-base whitespace-nowrap">
+            Your Journey, Our Care
+          </h4>
+        </div>
 
-          {/* Mobile Dropdown Menu */}
-          {menuOpen && (
-            <div
-              className="absolute top-16 w-full 
-                  bg-gradient-to-b from-[#ff1d58] via-[#ff1d58]/95 to-[#ff1d58]/85
-                  backdrop-blur-md text-white flex flex-col items-center py-6 md:hidden z-50 space-y-4 text-base
-                  border-t border-red-400/30 shadow-xl z-[9999]"
-              role="menu"
-              aria-label="Mobile navigation menu"
-              style={{ zIndex: 9999 }}
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex gap-6 text-sm md:text-base lg:text-lg">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleNavClick(item.href, e)}
+              className={`hover:text-yellow-300 transition-colors duration-200 relative py-2 px-3 rounded ${
+                activeSection === item.href.substring(1)
+                  ? "text-yellow-300 font-semibold"
+                  : "hover:underline"
+              }`}
             >
-              {navItems.map((item, index) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(item.href, e)}
-                  className={`hover:text-yellow-300 transition-colors duration-200 py-2 px-4 rounded w-full text-center ${
-                    activeSection === item.href.substring(1)
-                      ? "text-yellow-300 font-semibold bg-red-600/30"
-                      : "hover:bg-red-600/20"
-                  }`}
-                  role="menuitem"
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                    animation: "fadeInUp 0.3s ease-out forwards",
-                  }}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          )}
+              {item.label}
+              {activeSection === item.href.substring(1) && (
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-300 rounded-full"></span>
+              )}
+            </a>
+          ))}
+        </nav>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="focus:outline-none p-2 hover:bg-red-600 rounded"
+          >
+            {/* SVG Icon */}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="absolute top-16 left-0 w-full bg-[#ff1d58] text-white flex flex-col items-center py-6 md:hidden z-50 space-y-4 text-base">
+          {navItems.map((item, index) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => handleNavClick(item.href, e)}
+              className={`hover:text-yellow-300 py-2 px-4 w-full text-center ${
+                activeSection === item.href.substring(1)
+                  ? "text-yellow-300 font-semibold bg-red-600/30"
+                  : "hover:bg-red-600/20"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes fadeInUp {
@@ -215,7 +160,7 @@ const Header = () => {
           }
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

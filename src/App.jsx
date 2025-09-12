@@ -73,7 +73,7 @@ function App() {
   if (loadError) return <div>Something went wrong</div>;
   if (!isLoaded) return null;
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full overflow-hidden">
       <ToastContainer
         transition={Slide}
         position="top-center"
@@ -93,6 +93,8 @@ function App() {
       />
 
       <Header adminPhone={adminPhone} />
+       {/* Spacer div to prevent content from hiding behind fixed header */}
+      <div className="h-16 " style={{ zIndex: 999 }}></div>
       <main>
         <div
           className="relative flex flex-col bg-[#f8f5ef] "
