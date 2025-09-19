@@ -10,15 +10,18 @@ const FairDetails = ({
   driverAllowance,
   permitCharges,
 }) => {
-console.log('totalPrice :', totalPrice)
-console.log('tollCharge :', tollCharge)
+  // console.log("totalPrice :", totalPrice);
+  // console.log("tollCharge :", tollCharge);
   // ok
-  const minKms = tripType === "onewaytrip" ? 130 : 250;
+  const minKms = tripType === "onewaytrip" ? 130 : 500;
   const displayKms = totalKms < minKms ? minKms : totalKms;
-  const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));
-console.log('rawPermitCharge :', rawPermitCharge)
-
-  const finalPrice = totalPrice + tollCharge + rawPermitCharge;
+  // const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));
+  // console.log("rawPermitCharge :", rawPermitCharge);
+  console.log("driverAllowance :", driverAllowance);
+  const finalPrice =
+    totalPrice + tollCharge + (permitCharges || 0) + driverAllowance;
+  // console.log("permitCharges :", permitCharges);
+  // console.log("finalPrice :", finalPrice);
 
   return (
     <motion.div

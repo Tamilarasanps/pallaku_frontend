@@ -59,7 +59,7 @@ const Location = ({ isMapLoaded }) => {
         setVehicleList(true);
         setTollCharge(() => {
           const toll = data?.tolls?.[0]?.units;
-          console.log('toll :', toll)
+          // console.log('toll :', toll)
           if (toll === "" || toll == null) return 0; // if empty or undefined
           return tripType === "onewaytrip"
             ? Number(toll) / 2

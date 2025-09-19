@@ -85,7 +85,7 @@ export default function SuccessPage() {
       </div>
     );
   }
-  console.log("bookingData : ", bookingData);
+  // console.log("bookingData : ", bookingData);
 
   // Main success page
   return (

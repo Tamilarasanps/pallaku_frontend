@@ -22,7 +22,7 @@ const VehiclesList = () => {
     setMinKm,
     setDriverAllowance,
     driverAllowance,
-    baseFair
+    baseFair,
   } = useTrip();
 
   const handleToggle = (index) =>
@@ -54,7 +54,9 @@ const VehiclesList = () => {
             (1000 * 60 * 60 * 24)
         )
       );
-      return `₹ ${car.driverAllowance * days} (${car.driverAllowance} × ${days} days)`;
+      return `₹ ${car.driverAllowance * days} (${
+        car.driverAllowance
+      } × ${days} days)`;
     }
     return `₹ ${car.driverAllowance}`;
   };
@@ -72,17 +74,19 @@ const VehiclesList = () => {
         const effectiveKms =
           tripType === "onewaytrip"
             ? Math.max(totalKms, 130)
-            : Math.max(totalKms, 250);
+            : Math.max(totalKms, 500);
 
         const price =
           tripType === "onewaytrip"
             ? car.oneWayPrice * effectiveKms
-            : car.roundTripPrice * effectiveKms || 0 ;
+            : car.roundTripPrice * effectiveKms || 0;
+        const decimalPrice = Math.floor(price);
 
         const driverAllowanceValue = getDriverAllowanceValue(car); // number
         const driverAllowanceDisplay = getDriverAllowanceDisplay(car); // string
 
-        const finalPrice = price + tollCharge + driverAllowanceValue;
+        const finalPrice =
+          price + tollCharge + driverAllowanceValue + permitCharges;
         let roundPrice = Math.trunc(finalPrice);
 
         return (
@@ -188,15 +192,15 @@ const VehiclesList = () => {
                     }
                     tripType={tripType}
                     totalKms={totalKms}
-                    permitCharges={permitCharges > 0 ? permitCharges : "-"}
+                    permitCharges={permitCharges > 0 ? permitCharges : null}
                     baseFair={
                       tripType === "onewaytrip"
                         ? car.oneWayPrice
                         : car.roundTripPrice
                     }
-                    totalPrice={price}
+                    totalPrice={decimalPrice}
                     tollCharge={tollCharge}
-                    driverAllowance={driverAllowanceDisplay}
+                    driverAllowance={driverAllowanceValue}
                   />
                 </motion.div>
               )}
