@@ -9,10 +9,12 @@ const FairDetails = ({
   tollCharge,
   driverAllowance,
   permitCharges,
+  minKm
 }) => {
   // console.log("totalPrice :", totalPrice);
   // console.log("tollCharge :", tollCharge);
   // ok
+  console.log('minKm as :',minKm)
   const minKms = tripType === "onewaytrip" ? 130 : 500;
   const displayKms = totalKms < minKms ? minKms : totalKms;
   // const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));

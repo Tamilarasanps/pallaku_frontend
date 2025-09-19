@@ -57,9 +57,10 @@ const BookingConfirmation = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-
+  console.log("minKm :", minKm);
   const getTotalFare = () => {
     const kmsForFare = totalKms < minKm ? minKm : totalKms;
+    console.log("kmsForFare :", kmsForFare);
     return kmsForFare * baseFair;
   };
 
@@ -166,7 +167,7 @@ const BookingConfirmation = () => {
     {
       label: "Total",
       value: formatCurrency(
-        getTotalFare() + tollCharge + driverAmount + permitCharges
+        Math.floor(getTotalFare() + tollCharge + driverAmount + permitCharges)
       ),
     },
   ];
