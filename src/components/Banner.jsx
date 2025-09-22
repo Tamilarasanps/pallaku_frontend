@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import car from "../assets/travels.jpg";
 import banner from "../assets/car.jpg";
 
-const Banner = ({ adminMobile }) => {
+const Banner = ({ adminPhone }) => {
+  console.log("adminPhone :", adminPhone);
   return (
     <div
       className="relative w-full aspect-[21/9] max-h-[600px]  mx-auto overflow-hidden"
@@ -21,7 +22,6 @@ const Banner = ({ adminMobile }) => {
         className="absolute inset-y-0 left-0 lg:w-fit w-[70%] space-y-3 
                 bg-gradient-to-r from-black/70 via-black/40 to-transparent 
                 "
-                
       >
         <motion.div
           className="h-full flex items-center px-4 sm:px-8 md:px-16"
@@ -38,8 +38,7 @@ const Banner = ({ adminMobile }) => {
               destinations.
             </p>
             <p className="text-white  lg:text-lg text-xs font-medium animate-bounce duration-1000 delay-300">
-              📞 Call us now:{" "}
-              <span className="font-bold ">+91 78712 37890</span>
+              📞 Call us now: <span className="font-bold ">{adminPhone}</span>
             </p>
           </div>
         </motion.div>

@@ -100,7 +100,7 @@ function App() {
           className="relative flex flex-col bg-[#f8f5ef] "
           
         >
-          <Banner />
+          <Banner adminPhone={adminPhone}/>
 
           <Location isMapLoaded={isLoaded} />
 
