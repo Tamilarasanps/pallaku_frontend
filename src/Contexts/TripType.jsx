@@ -21,7 +21,6 @@ export const TripContextProvider = ({ children }) => {
   const [permitCharges, setPermitCharges] = useState(0);
   const [minKm, setMinKm] = useState(null);
   const [driverAllowance, setDriverAllowance] = useState(null);
-console.log('minKm trip :',minKm)
   return (
     <TripContext.Provider
       value={{

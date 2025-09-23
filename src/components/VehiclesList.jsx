@@ -36,7 +36,7 @@ const VehiclesList = () => {
         Math.ceil(
           (new Date(startDate[1]) - new Date(startDate[0])) /
             (1000 * 60 * 60 * 24)
-        )+1
+        ) + 1
       );
 
       return car.driverAllowance * days; // number
@@ -46,13 +46,13 @@ const VehiclesList = () => {
 
   // 👉 Returns display string for UI
   const getDriverAllowanceDisplay = (car) => {
-    if (tripType === "roundtrip" && startDate.length >=1 ) {
+    if (tripType === "roundtrip" && startDate.length >= 1) {
       const days = Math.max(
         1,
         Math.ceil(
           (new Date(startDate[1]) - new Date(startDate[0])) /
             (1000 * 60 * 60 * 24)
-        )+1
+        ) + 1
       );
       return `₹ ${car.driverAllowance * days} (${
         car.driverAllowance
@@ -84,7 +84,6 @@ const VehiclesList = () => {
 
         const driverAllowanceValue = getDriverAllowanceValue(car); // number
         const driverAllowanceDisplay = getDriverAllowanceDisplay(car); // string
-        console.log('driverAllowanceDisplay :',driverAllowanceDisplay)
 
         const finalPrice =
           price + tollCharge + driverAllowanceValue + permitCharges;
