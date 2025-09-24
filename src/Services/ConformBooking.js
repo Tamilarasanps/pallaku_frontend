@@ -3,8 +3,8 @@ import axios from "axios";
 const ConformBooking = async (bookingData) => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/conform",
-      // "https://pallaku-backend.onrender.com/conform",
+      // "http://localhost:5000/conform",
+      "https://pallaku-backend.onrender.com/conform",
       bookingData
     );
     // console.log('response :', response)
