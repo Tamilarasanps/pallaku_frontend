@@ -29,6 +29,7 @@ const BookingConfirmation = () => {
     mobile: "",
     email: "",
     pickupTime: "",
+    dropTime: "",
   });
   const {
     selectedVehicle,
@@ -49,7 +50,7 @@ const BookingConfirmation = () => {
     minKm,
     permitCharges,
   } = useTrip();
-
+  
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -57,10 +58,20 @@ const BookingConfirmation = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-  console.log("minKm :", minKm);
+  
+
+  const roundTripDays = Math.max(
+    1,
+    Math.ceil(
+      (new Date(startDate[1]) - new Date(startDate[0])) / (1000 * 60 * 60 * 24)
+    ) + 1
+  );
+  
+  let out = minKm * roundTripDays;
+
   const getTotalFare = () => {
-    const kmsForFare = totalKms < minKm ? minKm : totalKms;
-    console.log("kmsForFare :", kmsForFare);
+    const kmsForFare = totalKms < minKm ? tripType==="onewaytrip"?minKm:minKm*roundTripDays  : totalKms;
+    
     return kmsForFare * baseFair;
   };
 
@@ -119,7 +130,13 @@ const BookingConfirmation = () => {
       const bookingId = response?.data?.newBooking?._id;
 
       if (response?.status === 200) {
-        setForm({ name: "", mobile: "", email: "", pickupTime: "" });
+        setForm({
+          name: "",
+          mobile: "",
+          email: "",
+          pickupTime: "",
+          dropTime: "",
+        });
         setStartDate([new Date()]);
         setFromInput("");
         setToInput("");
@@ -159,10 +176,15 @@ const BookingConfirmation = () => {
       })(),
     },
     { label: "Driver Allowance", value: formatCurrency(driverAmount) },
-    { label: "Permit Charges", value: formatCurrency(permitCharges) },
+    {
+      label: "Permit Charges",
+      value: formatCurrency(
+        permitCharges <= 0 ? "Not Applicable" : permitCharges
+      ),
+    },
     {
       label: "Toll Charges (Approx)",
-      value: tollCharge ? formatCurrency(tollCharge) : "applicable",
+      value: tollCharge ? formatCurrency(tollCharge) : "₹ 0",
     },
     {
       label: "Total",
@@ -311,6 +333,42 @@ const BookingConfirmation = () => {
                 })}
               </select>
             </div>
+            {tripType === "roundtrip" && (
+              <div>
+                <label htmlFor="dropTime" className="block mb-1 font-medium">
+                  <Calendar className="inline w-4 h-4 mr-1" /> Drop Time
+                </label>
+                <select
+                  name="dropTime"
+                  id="dropTime"
+                  required
+                  value={form.dropTime}
+                  onChange={handleChange}
+                  className="w-full border border-[#ff1d58] rounded-lg px-4 py-2 shadow-sm focus:ring-[#ff1d58] outline-[#ff1d58]"
+                >
+                  <option value="">Select Time</option>
+                  {Array.from({ length: 24 * 4 }).map((_, idx) => {
+                    const hours24 = Math.floor(idx / 4);
+                    const minutes = (idx % 4) * 15;
+
+                    // Convert to 12-hour format
+                    const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+                    const ampm = hours24 < 12 ? "AM" : "PM";
+                    const timeStr = `${hours12
+                      .toString()
+                      .padStart(2, "0")}:${minutes
+                      .toString()
+                      .padStart(2, "0")} ${ampm}`;
+
+                    return (
+                      <option key={timeStr} value={timeStr}>
+                        {timeStr}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            )}
           </div>
 
           <div className="text-center pt-6">

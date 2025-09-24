@@ -9,20 +9,23 @@ const FairDetails = ({
   tollCharge,
   driverAllowance,
   permitCharges,
-  minKm
+  minKm,
+  startDate,
+  vehicles,
 }) => {
-  // console.log("totalPrice :", totalPrice);
-  // console.log("tollCharge :", tollCharge);
+  const roundTripDays = Math.max(
+    1,
+    Math.ceil(
+      (new Date(startDate[1]) - new Date(startDate[0])) / (1000 * 60 * 60 * 24)
+    ) + 1
+  );
 
-  const minKms = tripType === "onewaytrip" ? 130 : 500;
-  const displayKms = totalKms < minKms ? minKms : totalKms;
-  // const rawPermitCharge = Number(driverAllowance.replace(/[^0-9.]/g, ""));
-  // console.log("rawPermitCharge :", rawPermitCharge);
+  let tripDate = baseKm * roundTripDays;
   const finalPrice =
-    totalPrice + tollCharge + (permitCharges || 0) + driverAllowance;
-  // console.log("permitCharges :", permitCharges);
-  // console.log("finalPrice :", finalPrice);
-
+    totalPrice +
+    tollCharge +
+    (permitCharges === "Not Applicable" ? 0 : permitCharges) +
+    driverAllowance;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,7 +43,11 @@ const FairDetails = ({
         <tbody>
           <tr>
             <td className="px-4 py-1">Base km</td>
-            <td className="px-4 py-1">{baseKm?.toFixed(2)} km</td>
+            <td className="px-4 py-1">
+              {tripType === "onewaytrip"
+                ? `${baseKm} km`
+                : `${tripDate} (${baseKm} km × ${roundTripDays} days)`}
+            </td>
           </tr>
           <tr>
             <td className="px-4 py-1">Total km</td>
@@ -52,8 +59,17 @@ const FairDetails = ({
           </tr>
           <tr>
             <td className="px-4 py-1">Total Base Fare</td>
+            {/* <td className="px-4 py-1">
+              ₹{totalPrice} ({baseKm} km × ₹{Number(baseFair).toFixed(2)})
+            </td> */}
             <td className="px-4 py-1">
-              ₹{totalPrice} ({displayKms} km × ₹{Number(baseFair).toFixed(2)})
+              {tripType === "onewaytrip"
+                ? `₹${totalPrice} (${baseKm} km × ₹${Number(baseFair).toFixed(
+                    2
+                  )})`
+                : `₹${totalPrice} (${roundTripDays} days × ${baseKm} km × ₹${Number(
+                    baseFair
+                  ).toFixed(2)})`}
             </td>
           </tr>
           <tr>

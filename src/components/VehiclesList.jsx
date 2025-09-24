@@ -19,6 +19,7 @@ const VehiclesList = () => {
     vehicles,
     startDate,
     permitCharges,
+    minKm,
     setMinKm,
     setDriverAllowance,
     driverAllowance,
@@ -38,7 +39,6 @@ const VehiclesList = () => {
             (1000 * 60 * 60 * 24)
         ) + 1
       );
-
       return car.driverAllowance * days; // number
     }
     return car.driverAllowance; // number
@@ -61,6 +61,12 @@ const VehiclesList = () => {
     return `₹ ${car.driverAllowance}`;
   };
 
+  const roundTripDays = Math.max(
+    1,
+    Math.ceil(
+      (new Date(startDate[1]) - new Date(startDate[0])) / (1000 * 60 * 60 * 24)
+    ) + 1
+  );
   return (
     <div className="mt-8 flex flex-col items-center px-4 py-2">
       <h1 className="font-bold lg:text-2xl text-md text-[#ff1d58] text-center">
@@ -73,22 +79,30 @@ const VehiclesList = () => {
       {vehicles.map((car, index) => {
         const effectiveKms =
           tripType === "onewaytrip"
-            ? Math.max(totalKms, 130)
-            : Math.max(totalKms, 500);
+            ? Math.max(totalKms, car.oneWayTripMinKm)
+            : Math.max(
+                totalKms > car.roundTripMinKm
+                  ? totalKms
+                  : car.roundTripMinKm * roundTripDays
+              );
 
         const price =
           tripType === "onewaytrip"
             ? car.oneWayPrice * effectiveKms
             : car.roundTripPrice * effectiveKms || 0;
+
         const decimalPrice = Math.floor(price);
 
         const driverAllowanceValue = getDriverAllowanceValue(car); // number
         const driverAllowanceDisplay = getDriverAllowanceDisplay(car); // string
-
         const finalPrice =
-          price + tollCharge + driverAllowanceValue + permitCharges;
-        let roundPrice = Math.trunc(finalPrice);
+          decimalPrice + tollCharge + driverAllowanceValue + permitCharges;
 
+        let baseKm = (car) => {
+          tripType === "onewaytrip"
+            ? car?.oneWayTripMinKm
+            : car?.roundTripMinKm;
+        };
         return (
           <motion.div
             key={car.type}
@@ -141,7 +155,7 @@ const VehiclesList = () => {
               {/* Price & Select */}
               <div className="w-full lg:w-1/6 flex flex-col h-36 items-end lg:items-end justify-around mt-4 lg:mt-0">
                 <h1 className="text-lg font-bold text-[#4a1e2d]">
-                  Total Amount : ₹ {roundPrice}
+                  Total Amount : ₹ {finalPrice}
                 </h1>
                 <p className="text-sm mt-1 text-[#ff1d58]">
                   Driver Allowance: {driverAllowanceDisplay}
@@ -192,7 +206,9 @@ const VehiclesList = () => {
                     }
                     tripType={tripType}
                     totalKms={totalKms}
-                    permitCharges={permitCharges > 0 ? permitCharges : null}
+                    permitCharges={
+                      permitCharges > 0 ? permitCharges : "Not Applicable"
+                    }
                     baseFair={
                       tripType === "onewaytrip"
                         ? car.oneWayPrice
@@ -201,6 +217,8 @@ const VehiclesList = () => {
                     totalPrice={decimalPrice}
                     tollCharge={tollCharge}
                     driverAllowance={driverAllowanceValue}
+                    vehicles={vehicles}
+                    startDate={startDate}
                   />
                 </motion.div>
               )}
