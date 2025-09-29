@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 const TripContext = createContext();
-
+// ok
 export const TripContextProvider = ({ children }) => {
   const [tripType, setTripType] = useState("onewaytrip");
   const [fromInput, setFromInput] = useState("");
