@@ -4,8 +4,8 @@ const TripContext = createContext();
 
 export const TripContextProvider = ({ children }) => {
   const [tripType, setTripType] = useState("onewaytrip");
-  const [fromInput, setFromInput] = useState("pollachi");
-  const [toInput, setToInput] = useState("palani");
+  const [fromInput, setFromInput] = useState("");
+  const [toInput, setToInput] = useState("");
   const [vehicleList, setVehicleList] = useState(false);
   const [totalKms, setTotalKms] = useState(null);
   const [vehiclePriceList, setVehiclePriceList] = useState(null);
