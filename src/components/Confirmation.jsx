@@ -50,7 +50,7 @@ const BookingConfirmation = () => {
     minKm,
     permitCharges,
   } = useTrip();
-  
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -58,7 +58,8 @@ const BookingConfirmation = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-  
+
+  console.log("confirm Page");
 
   const roundTripDays = Math.max(
     1,
@@ -66,12 +67,17 @@ const BookingConfirmation = () => {
       (new Date(startDate[1]) - new Date(startDate[0])) / (1000 * 60 * 60 * 24)
     ) + 1
   );
-  
+
   let out = minKm * roundTripDays;
 
   const getTotalFare = () => {
-    const kmsForFare = totalKms < minKm ? tripType==="onewaytrip"?minKm:minKm*roundTripDays  : totalKms;
-    
+    const kmsForFare =
+      totalKms < minKm
+        ? tripType === "onewaytrip"
+          ? minKm
+          : minKm * roundTripDays
+        : totalKms;
+
     return kmsForFare * baseFair;
   };
 
@@ -115,6 +121,7 @@ const BookingConfirmation = () => {
       vehicle: selectedVehicle,
       totalKms,
       baseFair,
+      totalBaseFare: Number(getTotalFare()),
       tollCharge,
       totalFare: Number(
         getTotalFare() + tollCharge + driverAllowance + rawPermitCharge
@@ -124,9 +131,11 @@ const BookingConfirmation = () => {
       departureDate: startDate[0],
       arrivalDate: startDate[1] || "-",
     };
+    console.log("bookingData :", bookingData);
 
     try {
       const response = await ConformBooking(bookingData);
+      console.log("response :", response);
       const bookingId = response?.data?.newBooking?._id;
 
       if (response?.status === 200) {

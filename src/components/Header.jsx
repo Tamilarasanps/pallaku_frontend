@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import logo from "../assets/pallaku.png";
-
+import { FaBars, FaTimes } from "react-icons/fa";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -124,6 +124,7 @@ const Header = () => {
             className="focus:outline-none p-2 hover:bg-red-600 rounded"
           >
             {/* SVG Icon */}
+            {menuOpen ? <FaTimes size={30} /> : <FaBars size={30} />}
           </button>
         </div>
       </div>
