@@ -3,9 +3,9 @@ import { createContext, useContext, useState } from "react";
 const TripContext = createContext();
 // ok
 export const TripContextProvider = ({ children }) => {
-  const [tripType, setTripType] = useState("");
+  const [tripType, setTripType] = useState("onewaytrip");
   const [fromInput, setFromInput] = useState("");
-  const [toInput, setToInput] = useState("tiruppur");
+  const [toInput, setToInput] = useState("");
   const [vehicleList, setVehicleList] = useState(false);
   const [totalKms, setTotalKms] = useState(null);
   const [vehiclePriceList, setVehiclePriceList] = useState(null);
