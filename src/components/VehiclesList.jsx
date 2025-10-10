@@ -81,11 +81,10 @@ const VehiclesList = () => {
           tripType === "onewaytrip"
             ? Math.max(totalKms, car.oneWayTripMinKm)
             : Math.max(
-                totalKms > car.roundTripMinKm
+                totalKms > car.roundTripMinKm * roundTripDays
                   ? totalKms
                   : car.roundTripMinKm * roundTripDays
               );
-
         const price =
           tripType === "onewaytrip"
             ? car.oneWayPrice * effectiveKms

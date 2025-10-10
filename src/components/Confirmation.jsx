@@ -72,7 +72,7 @@ const BookingConfirmation = () => {
 
   const getTotalFare = () => {
     const kmsForFare =
-      totalKms < minKm
+      totalKms < minKm * roundTripDays
         ? tripType === "onewaytrip"
           ? minKm
           : minKm * roundTripDays
