@@ -59,7 +59,7 @@ const BookingConfirmation = () => {
     setForm({ ...form, [name]: value });
   };
 
-  console.log("confirm Page");
+
 
   const roundTripDays = Math.max(
     1,

@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 export default function SuccessPage() {
   const [bookingData, setBookingData] = useState(null);
-  console.log("bookingData : su", bookingData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,7 +43,7 @@ export default function SuccessPage() {
         // "http://localhost:5000";
 
         const response = await axios.get(`${API_BASE_URL}/api/booking/${id}`);
-        console.log("response :su ", response);
+
         setBookingData(response.data);
         setError(null);
       } catch (error) {
