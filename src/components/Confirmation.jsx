@@ -50,7 +50,7 @@ const BookingConfirmation = () => {
     minKm,
     permitCharges,
   } = useTrip();
-
+  
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -58,8 +58,6 @@ const BookingConfirmation = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-
-
 
   const roundTripDays = Math.max(
     1,
@@ -71,15 +69,29 @@ const BookingConfirmation = () => {
   let out = minKm * roundTripDays;
 
   const getTotalFare = () => {
-    const kmsForFare =
-      totalKms < minKm * roundTripDays
-        ? tripType === "onewaytrip"
-          ? minKm
-          : minKm * roundTripDays
-        : totalKms;
+    let kmsForFare;
 
+    if (tripType === "onewaytrip") {
+      // for one-way, compare only with minKm
+      kmsForFare = totalKms < minKm ? minKm : totalKms;
+    } else {
+      // for roundtrip, compare with minKm * roundTripDays
+      kmsForFare =
+        totalKms < minKm * roundTripDays ? minKm * roundTripDays : totalKms;
+    }
+
+    // console.log({ kmsForFare, minKm, totalKms, roundTripDays, tripType });
     return kmsForFare * baseFair;
   };
+
+  //   totalKms < minKm * roundTripDays
+  //     ? tripType === "onewaytrip"
+  //       ? minKm
+  //       : minKm * roundTripDays
+  //     : totalKms;
+  // console.log("kmsForFare :", kmsForFare);
+  // console.log("minKm :", minKm);
+  // console.log("totalKms :", totalKms);
 
   const formatCurrency = (num) => `₹ ${num}`;
 
@@ -131,11 +143,11 @@ const BookingConfirmation = () => {
       departureDate: startDate[0],
       arrivalDate: startDate[1] || "-",
     };
-    console.log("bookingData :", bookingData);
+    // console.log("bookingData :", bookingData);
 
     try {
       const response = await ConformBooking(bookingData);
-      console.log("response :", response);
+      // console.log("response :", response);
       const bookingId = response?.data?.newBooking?._id;
 
       if (response?.status === 200) {
@@ -171,7 +183,10 @@ const BookingConfirmation = () => {
 
   const driverAmount = Number(driverAllowance) || 0;
   const details = [
-    { label: "Base km", value: minKm },
+    {
+      label: "Base km",
+      value: tripType === "onewaytrip" ? minKm : minKm * roundTripDays,
+    },
     { label: "Total km", value: totalKms },
     { label: "Base Fare Per Km", value: formatCurrency(baseFair) },
     { label: "Total Base Fare", value: formatCurrency(getTotalFare()) },
