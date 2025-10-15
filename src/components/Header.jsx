@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import logo from "../assets/pallaku.png";
+// import logo from "../assets/pallaku.png";
+import logo from "../assets/OPEN-2.png";
+
 import { FaBars, FaTimes } from "react-icons/fa";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -84,13 +86,14 @@ const Header = () => {
       <div className="h-16 w-full shadow-lg bg-[#ff1d58] text-white flex items-center justify-between px-4 sm:px-6 md:px-8">
         {/* Logo + Tagline */}
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-shrink-0">
-          <div className="h-12 w-24 sm:w-20">
+          <div className="h-24 w-48 sm:w-40">
             <img
               src={logo}
               className="h-full w-full object-contain"
               alt="Pallaku Logo"
             />
           </div>
+
           <h4 className="font-bold text-sm md:text-base whitespace-nowrap">
             Your Journey, Our Care
           </h4>
