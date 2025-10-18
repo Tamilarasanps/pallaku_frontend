@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import logo from "../assets/pallaku.png";
-import logo from "../assets/OPEN-2.png";
+import logo from "../assets/I1.png";
+import logo1 from "../assets/i-2.png";
 
 import { FaBars, FaTimes } from "react-icons/fa";
 const Header = () => {
@@ -93,6 +94,13 @@ const Header = () => {
               alt="Pallaku Logo"
             />
           </div>
+          {/* <div className="h-24 w-48 sm:w-40">
+            <img
+              src={logo1}
+              className="h-full w-full object-contain"
+              alt="Pallaku Logo"
+            />
+          </div> */}
 
           <h4 className="font-bold text-sm md:text-base whitespace-nowrap">
             Your Journey, Our Care
